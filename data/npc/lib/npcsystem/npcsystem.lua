@@ -164,6 +164,26 @@ if NpcSystem == nil then
 		if ret ~= nil then
 			npcHandler:setMessage(MESSAGE_WALKAWAY_FEMALE, ret)
 		end
+		local ret = NpcSystem.getParameter('message_spelllearn')
+		if ret ~= nil then
+			npcHandler:setMessage(MESSAGE_SPELLLEARN, ret)
+		end
+		local ret = NpcSystem.getParameter('message_onspelllearn')
+		if ret ~= nil then
+			npcHandler:setMessage(MESSAGE_ONSPELLLEARN, ret)
+		end
+		local ret = NpcSystem.getParameter('message_onlearnedspell')
+		if ret ~= nil then
+			npcHandler:setMessage(MESSAGE_ONLEARNEDSPELL, ret)
+		end
+		local ret = NpcSystem.getParameter('message_oncantlearnspell')
+		if ret ~= nil then
+			npcHandler:setMessage(MESSAGE_ONCANTLEARNSPELL, ret)
+		end
+		local ret = NpcSystem.getParameter('message_oncantvocationlearnspell')
+		if ret ~= nil then
+			npcHandler:setMessage(MESSAGE_ONCANTVOCATIONLEARNSPELL, ret)
+		end
 
 		-- Parse modules.
 		for parameter, module in pairs(Modules.parseableModules) do

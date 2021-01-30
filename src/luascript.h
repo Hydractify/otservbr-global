@@ -340,6 +340,7 @@ class LuaScriptInterface
 		static Thing* getThing(lua_State* L, int32_t arg);
 		static Creature* getCreature(lua_State* L, int32_t arg);
 		static Player* getPlayer(lua_State* L, int32_t arg);
+		static InstantSpell getInstantSpell(lua_State* L, int32_t arg);
 
 		template<typename T>
 		static T getField(lua_State* L, int32_t arg, const std::string& key)
@@ -877,7 +878,7 @@ class LuaScriptInterface
 
 		static int luaPlayerGetAccountType(lua_State* L);
 		static int luaPlayerSetAccountType(lua_State* L);
-		
+
 		static int luaPlayeraddBestiaryKill(lua_State* L);
 		static int luaPlayercharmExpansion(lua_State* L);
 		static int luaPlayergetCharmMonsterType(lua_State* L);
@@ -976,7 +977,7 @@ class LuaScriptInterface
 		static int luaPlayerGetStashCounter(lua_State* L);
 		static int luaPlayerOpenStash(lua_State* L);
 		static int luaPlayerSetSpecialContainersAvailable(lua_State* L);
-		
+
 		static int luaPlayerGetStamina(lua_State* L);
 		static int luaPlayerSetStamina(lua_State* L);
 
@@ -1424,7 +1425,7 @@ class LuaScriptInterface
 		static int luaMonsterTypeRaceid(lua_State* L);
 		static int luaMonsterTypeBestiaryclass(lua_State* L);
 		static int luaMonsterTypeBestiaryOccurrence(lua_State* L);
-		static int luaMonsterTypeBestiaryLocations(lua_State* L);		
+		static int luaMonsterTypeBestiaryLocations(lua_State* L);
 		static int luaMonsterTypeBestiaryStars(lua_State* L);
 		static int luaMonsterTypeBestiaryCharmsPoints(lua_State* L);
 		static int luaMonsterTypeBestiarySecondUnlock(lua_State* L);
@@ -1579,6 +1580,7 @@ class LuaScriptInterface
 		static int luaSpellMagicLevel(lua_State* L);
 		static int luaSpellMana(lua_State* L);
 		static int luaSpellManaPercent(lua_State* L);
+		static int luaSpellPrice(lua_State* L);
 		static int luaSpellSoul(lua_State* L);
 		static int luaSpellRange(lua_State* L);
 		static int luaSpellPremium(lua_State* L);
@@ -1587,6 +1589,7 @@ class LuaScriptInterface
 		static int luaSpellNeedWeapon(lua_State* L);
 		static int luaSpellNeedLearn(lua_State* L);
 		static int luaSpellSelfTarget(lua_State* L);
+		static int luaSpellGetByName(lua_State* L);
 		static int luaSpellBlocking(lua_State* L);
 		static int luaSpellAggressive(lua_State* L);
 		static int luaSpellVocation(lua_State* L);

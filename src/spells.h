@@ -181,6 +181,12 @@ class Spell : public BaseSpell
 		void setManaPercent(uint32_t m) {
 			manaPercent = m;
 		}
+		uint32_t getPrice() const {
+			return price;
+		}
+		void setPrice(uint32_t newPrice) {
+			price = newPrice;
+		}
 		bool isPremium() const {
 			return premium;
 		}
@@ -253,7 +259,7 @@ class Spell : public BaseSpell
 		}
 		bool getPzOnUse() const {
 			return pzLocked;
-		}		
+		}
 		void setNeedTarget(bool n) {
 			needTarget = n;
 		}
@@ -322,6 +328,7 @@ class Spell : public BaseSpell
 
 		uint32_t mana = 0;
 		uint32_t manaPercent = 0;
+		uint32_t price = 0;
 		uint32_t soul = 0;
 
 		bool needWeapon = false;

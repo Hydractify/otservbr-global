@@ -35,6 +35,12 @@ if NpcHandler == nil then
 	MESSAGE_ALREADYFOCUSED = 21 -- When the player already has the focus of this npc.
 	MESSAGE_WALKAWAY_MALE = 22 -- When a male player walks out of the talkRadius of the npc.
 	MESSAGE_WALKAWAY_FEMALE = 23 -- When a female player walks out of the talkRadius of the npc.
+	MESSAGE_SPELLLEARN = 24 -- When the npc asks the player if he wants to learn a spell.
+	MESSAGE_ONSPELLLEARN = 25 -- When the player learned a spell.
+	MESSAGE_ONLEARNEDSPELL = 26 -- When the player already has learned the spell.
+	MESSAGE_ONCANTLEARNSPELL = 27 -- When the player can't learn a spell due to level limitations.
+	MESSAGE_ONCANTVOCATIONLEARNSPELL = 28 -- When the player can't learn a spell due to vocation limitations.
+	MESSAGE_ONCANTSELLVOCATIONSPELL = 29 -- When the NPC can't sell to the player's vocation.
 
 	-- Constant indexes for callback functions. These are also used for module callback ids.
 	CALLBACK_CREATURE_APPEAR = 1
@@ -51,6 +57,7 @@ if NpcHandler == nil then
 	CALLBACK_ONADDFOCUS = 18
 	CALLBACK_ONRELEASEFOCUS = 19
 	CALLBACK_ONTRADEREQUEST = 20
+	CALLBACK_ONSPELLREQUEST = 21
 
 	-- Addidional module callback ids
 	CALLBACK_MODULE_INIT	 = 12
@@ -76,7 +83,8 @@ if NpcHandler == nil then
 		talkDelay = nil,
 		callbackFunctions = nil,
 		modules = nil,
-		shopItems = nil, -- They must be here since ShopModule uses 'static' functions
+		shopItems = nil,  -- They must be here since ShopModule uses 'static' functions.
+		shopSpells = nil, -- Same reason as above.
 		eventSay = nil,
 		eventDelayedSay = nil,
 		topic = nil,
@@ -105,7 +113,13 @@ if NpcHandler == nil then
 			[MESSAGE_ONCLOSESHOP] = "Thank you, come back whenever you're in need of something else.",
 			[MESSAGE_ALREADYFOCUSED] = "|PLAYERNAME|, I am already talking to you.",
 			[MESSAGE_WALKAWAY_MALE] = "",
-			[MESSAGE_WALKAWAY_FEMALE] = ""
+			[MESSAGE_WALKAWAY_FEMALE] = "",
+			[MESSAGE_SPELLLEARN] = "Do you want to buy the spell '|ITEMNAME|' for |TOTALCOST| gold?",
+			[MESSAGE_ONSPELLLEARN] = "Here you are. Look in your spellbook for the pronunciation of this spell.",
+			[MESSAGE_ONLEARNEDSPELL] = "You already know that spell |PLAYERNAME|.",
+			[MESSAGE_ONCANTLEARNSPELL] = "You are not yet prepared for this spell |PLAYERNAME|.",
+			[MESSAGE_ONCANTVOCATIONLEARNSPELL] = "You cannot learn a spell from a different vocation |PLAYERNAME|.",
+			[MESSAGE_ONCANTSELLVOCATIONSPELL] = "I won't teach this spell to your vocation. Find someone else to teach you."
 		}
 	}
 
@@ -123,6 +137,7 @@ if NpcHandler == nil then
 		obj.keywordHandler = keywordHandler
 		obj.messages = {}
 		obj.shopItems = {}
+		obj.shopSpells = {}
 
 		setmetatable(obj.messages, self.messages)
 		self.messages.__index = self.messages
@@ -286,6 +301,8 @@ if NpcHandler == nil then
 				tmpRet = module:callbackOnMessageDefault(...)
 			elseif id == CALLBACK_MODULE_RESET and module.callbackOnModuleReset ~= nil then
 				tmpRet = module:callbackOnModuleReset(...)
+			elseif id == CALLBACK_ONSPELLREQUEST and module.callbackOnSpellRequest ~= nil then
+				tmpRet = module:callbackOnSpellRequest(...)
 			end
 			if not tmpRet then
 				ret = false
@@ -537,6 +554,17 @@ if NpcHandler == nil then
 				end
 			end
 		end
+	end
+	--
+	-- Handles onSpellRequest events. If you wish to handle this yourself, use the CALLBACK_ONTRADEREQUEST callback.
+	function NpcHandler:onSpellRequest(cid)
+		local callback = self:getCallback(CALLBACK_ONSPELLREQUEST)
+		if callback == nil or callback(cid) then
+			if self:processModuleCallback(CALLBACK_ONSPELLREQUEST, cid) then
+				return true
+			end
+		end
+		return false
 	end
 
 	-- Tries to greet the player with the given cid.

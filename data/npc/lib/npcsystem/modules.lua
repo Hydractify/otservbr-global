@@ -150,7 +150,6 @@ if Modules == nil then
 		else
 			npcHandler:say("You need a premium account in order to buy " .. parameters.spellName .. ".", cid)
 		end
-
 		npcHandler:resetNpc(cid)
 		return true
 	end
@@ -673,6 +672,11 @@ if Modules == nil then
 		if ret then
 			self:parseBuyableContainers(ret)
 		end
+
+		local ret = NpcSystem.getParameter("shop_spells")
+		if ret then
+			self:parseBuyableSpells(ret)
+		end
 	end
 
 	-- Parse a string contaning a set of buyable items.
@@ -735,6 +739,40 @@ if Modules == nil then
 					print("[Warning : " .. Npc():getName() .. "] NpcSystem:", "Parameter(s) missing for item:", name, itemid, cost)
 				end
 			end
+		end
+	end
+
+	-- Parse a string contaning a set of buyable spells.
+	function ShopModule:parseBuyableSpells(data)
+		for item in string.gmatch(data, "[^;]+") do
+			local spell = nil
+			local vocations = {}
+
+			local i = 1
+			for val in string.gmatch(item, "[^,]+") do
+				if i == 1 then
+					spell = Spell.getSpellByName(val)
+				elseif i == 2 then
+					for v in string.gmatch(val, "[^:]+") do
+						vocations[#vocations + 1] = tonumber(v)
+					end
+				else
+					print("[Warning : " .. Npc():getName() .. "] NpcSystem:", "Unknown parameter found in buyable spells parameter.", val, item)
+				end
+
+				i = i + 1
+			end
+
+			if spell == nil then
+				print("[Warning: " .. Npc():getName() .."] NpcSystem: Invalid spell '" .. item .. "'")
+			else
+				self:addLearnableSpell(spell, vocations)
+				self.npcHandler.shopSpells[#self.npcHandler.shopSpells + 1] = spell
+			end
+		end
+
+		if (next(self.npcHandler.shopSpells) ~= nil) then
+			self:addSpellDialog()
 		end
 	end
 
@@ -832,8 +870,8 @@ if Modules == nil then
 	-- Initializes the module and associates handler to it.
 	function ShopModule:init(handler)
 		self.npcHandler = handler
-		self.yesNode = KeywordNode:new(SHOP_YESWORD, ShopModule.onConfirm, {module = self})
-		self.noNode = KeywordNode:new(SHOP_NOWORD, ShopModule.onDecline, {module = self})
+		self.yesNode = KeywordNode:new(SHOP_YESWORD, ShopModule.onConfirm, { module = self })
+		self.noNode = KeywordNode:new(SHOP_NOWORD, ShopModule.onDecline, { module = self })
 		self.noText = handler:getMessage(MESSAGE_DECLINE)
 
 		if SHOPMODULE_MODE ~= SHOPMODULE_MODE_TALK then
@@ -922,12 +960,46 @@ if Modules == nil then
 				node:addChildKeywordNode(self.noNode)
 			end
 		end
+	end
 
-		if npcs_loaded_shop[getNpcCid()] == nil then
-			npcs_loaded_shop[getNpcCid()] = getNpcCid()
-			self.npcHandler.keywordHandler:addKeyword({'yes'}, ShopModule.onConfirm, {module = self})
-			self.npcHandler.keywordHandler:addKeyword({'no'}, ShopModule.onDecline, {module = self})
+	-- Adds a new learnable spell.
+	--	spell = A Spell table.
+	function ShopModule:addLearnableSpell(spell, vocations)
+		local parameters = {
+			spell = spell,
+			module = self,
+			vocations = vocations
+		}
+		keywords = string.split(string.lower(spell.name), "%s")
+
+		local node = self.npcHandler.keywordHandler:addKeyword(keywords, ShopModule.learnSpell, parameters)
+		node:addChildKeyword(SHOP_YESWORD, ShopModule.onSpellConfirm, parameters)
+		node:addChildKeyword(SHOP_NOWORD, ShopModule.onSpellDecline, parameters)
+	end
+
+	function ShopModule:addSpellDialog()
+		local npcHandler = self.npcHandler
+		local spells = npcHandler.shopSpells
+
+		local textSpells = ""
+		for k, spell in pairs(spells) do
+			if (#spells == k) then
+				textSpells = textSpells .. "'" .. spell.name .. "'."
+			else
+				textSpells = textSpells .. "'" .. spell.name .. "', "
+			end
 		end
+
+		local node = self.npcHandler.keywordHandler:addKeyword(
+			{ "spell" },
+			StdModule.say,
+			{
+				npcHandler = self.npcHandler,
+				text = "I can teach " .. textSpells
+					.. " You can also tell me for which level you would like to learn a spell, if you prefer that."
+			}
+		)
+		node:addChildKeyword("level", ShopModule.onSpellLevel, { module = self, spells = spells })
 	end
 
 	function ShopModule:getShopItem(itemId, itemSubType)
@@ -1115,7 +1187,7 @@ if Modules == nil then
 
 		if not isItemFluidContainer(itemid) then
 			subType = -1
-		elseif subType == 0 then 
+		elseif subType == 0 then
 			subType = -1
 		end
 
@@ -1275,6 +1347,124 @@ if Modules == nil then
 		return true
 	end
 
+	-- onSpellConfirm keyword callback function.
+	function ShopModule.onSpellConfirm(cid, message, keywords, parameters, node)
+		local npcHandler = parameters.module.npcHandler
+		if not npcHandler:isFocused(cid) then
+			return false
+		end
+
+		local player = Player(cid)
+		local spell = parameters.spell
+		local vocations = parameters.vocations
+
+		local parseInfo = {
+			[TAG_PLAYERNAME] = player:getName(),
+			[TAG_TOTALCOST] = spell.price,
+			[TAG_ITEMNAME] = spell.name
+		}
+
+		local hasBadVocation = false
+		if next(vocations) ~= nil then
+			for _, v in pairs(vocations) do
+				if (player:getVocation():getId() == v) then
+					hasBadVocation = true
+				end
+			end
+		end
+
+		if player:isPremium() or spell.premium == 0 then
+			if player:hasLearnedSpell(spell.name) then
+				local msg = npcHandler:getMessage(MESSAGE_ONLEARNEDSPELL)
+				msg = npcHandler:parseMessage(msg, parseInfo)
+				npcHandler:say(msg, cid)
+			elseif hasBadVocation then
+				local msg = npcHandler:getMessage(MESSAGE_ONCANTSELLVOCATIONSPELL)
+				msg = npcHandler:parseMessage(msg, parseInfo)
+				npcHandler:say(msg, cid)
+			elseif not player:canLearnSpell(spell.name) then
+				local msg = ""
+
+				if spell.level > player:getLevel() then
+					msg = npcHandler:getMessage(MESSAGE_ONCANTLEARNSPELL)
+				else
+					msg = npcHandler:getMessage(MESSAGE_ONCANTVOCATIONLEARNSPELL)
+				end
+
+				msg = npcHandler:parseMessage(msg, parseInfo)
+				npcHandler:say(msg, cid)
+			elseif not player:removeMoneyNpc(spell.price) then
+				local msg = npcHandler:getMessage(MESSAGE_NEEDMONEY)
+				msg = npcHandler:parseMessage(msg, parseInfo)
+				npcHandler:say(msg, cid)
+			else
+				local msg = npcHandler:getMessage(MESSAGE_ONSPELLLEARN)
+				msg = npcHandler:parseMessage(msg, parseInfo)
+				npcHandler:say(msg, cid)
+				player:learnSpell(spell.name)
+			end
+		else
+			npcHandler:say("You need a premium account in order to buy " .. spell.name .. ".", cid)
+		end
+
+		npcHandler:resetNpc(cid)
+		return true
+	end
+
+	-- onSpellDecline keyword callback function.
+	function ShopModule.onSpellDecline(cid, message, keywords, parameters, node)
+		local npcHandler = parameters.module.npcHandler
+		if not npcHandler:isFocused(cid) then
+			return false
+		end
+
+		local player = Player(cid)
+		local spell = parameters.spell
+
+		local parseInfo = {
+			[TAG_PLAYERNAME] = player:getName(),
+			[TAG_TOTALCOST] = spell.price,
+			[TAG_ITEMNAME] = spell.name
+		}
+
+		local msg = npcHandler:parseMessage(parameters.module.noText, parseInfo)
+		npcHandler:say(msg, cid)
+
+		npcHandler:resetNpc(cid)
+		return true
+	end
+
+	function ShopModule.onSpellLevel(cid, message, keywords, parameters, node)
+		local npcHandler = parameters.module.npcHandler
+		if not npcHandler:isFocused(cid) then
+			return false
+		end
+
+		local player = Player(cid)
+		local spells = parameters.spells
+
+		local level = tonumber(message:match("[%d]+"))
+		local filteredSpells = ""
+
+		for k, spell in pairs(spells) do
+			if (spell.level == level) then
+				if (#spells == k) then
+					filteredSpells = filteredSpells .. "'" .. spell.name .. "'"
+				else
+					filteredSpells = filteredSpells .. "'" .. spell.name .. "', "
+				end
+			end
+		end
+
+		if (#filteredSpells == 0) then
+			npcHandler:say("I don't have any spells for level " .. level .. ".", cid)
+		else
+			npcHandler:say("I have " .. filteredSpells .. " that are level" .. level .. ".", cid)
+		end
+
+		return true
+	end
+
 	-- tradeItem callback function. Makes the npc say the message defined by MESSAGE_BUY or MESSAGE_SELL
 	function ShopModule.tradeItem(cid, message, keywords, parameters, node)
 		local module = parameters.module
@@ -1318,6 +1508,36 @@ if Modules == nil then
 			msg = module.npcHandler:parseMessage(msg, parseInfo)
 			module.npcHandler:say(msg, cid)
 		end
+		return true
+	end
+
+	function ShopModule.learnSpell(cid, message, keywords, parameters, node)
+		local npcHandler = parameters.module.npcHandler
+
+		if npcHandler == nil then
+			error("StdModule.learnSpell called without any npcHandler instance.")
+		end
+
+		if not npcHandler:isFocused(cid) then
+			return false
+		end
+
+		if not npcHandler:onSpellRequest(cid) then
+			return true
+		end
+
+		local spell = parameters.spell
+		local player = Player(cid)
+
+		local parseInfo = {
+			[TAG_TOTALCOST] = spell.price,
+			[TAG_ITEMNAME] = spell.name
+		}
+
+		local msg = npcHandler:getMessage(MESSAGE_SPELLLEARN)
+		msg = npcHandler:parseMessage(msg, parseInfo)
+		npcHandler:say(msg, cid)
+
 		return true
 	end
 end

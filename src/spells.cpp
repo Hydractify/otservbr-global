@@ -502,6 +502,10 @@ bool Spell::configureSpell(const pugi::xml_node& node)
 		manaPercent = pugi::cast<uint32_t>(attr.value());
 	}
 
+	if ((attr = node.attribute("price"))) {
+		price = pugi::cast<uint32_t>(attr.value());
+	}
+
 	if ((attr = node.attribute("soul"))) {
 		soul = pugi::cast<uint32_t>(attr.value());
 	}
@@ -1289,7 +1293,7 @@ bool RuneSpell::executeCastSpell(Creature* creature, const LuaVariant& var, bool
 	if (!scriptInterface->reserveScriptEnv()) {
 		std::cout << "[Error - RuneSpell::executeCastSpell"
 				<< " Creature "
-				<< creature->getName() 
+				<< creature->getName()
 				<< " runeId "
 				<< getRuneItemId()
 				<< "] Call stack overflow. Too many lua script calls being nested."

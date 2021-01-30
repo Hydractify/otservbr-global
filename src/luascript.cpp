@@ -925,7 +925,7 @@ void LuaScriptInterface::pushCombatDamage(lua_State* L, const CombatDamage& dama
 
 void LuaScriptInterface::pushInstantSpell(lua_State* L, const InstantSpell& spell)
 {
-	lua_createtable(L, 0, 6);
+	lua_createtable(L, 0, 8);
 
 	setField(L, "name", spell.getName());
 	setField(L, "words", spell.getWords());
@@ -933,6 +933,8 @@ void LuaScriptInterface::pushInstantSpell(lua_State* L, const InstantSpell& spel
 	setField(L, "mlevel", spell.getMagicLevel());
 	setField(L, "mana", spell.getMana());
 	setField(L, "manapercent", spell.getManaPercent());
+	setField(L, "premium", spell.isPremium());
+	setField(L, "price", spell.getPrice());
 
 	setMetatable(L, -1, "Spell");
 }
@@ -3280,6 +3282,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Spell", "magicLevel", LuaScriptInterface::luaSpellMagicLevel);
 	registerMethod("Spell", "mana", LuaScriptInterface::luaSpellMana);
 	registerMethod("Spell", "manaPercent", LuaScriptInterface::luaSpellManaPercent);
+	registerMethod("Spell", "price", LuaScriptInterface::luaSpellPrice);
 	registerMethod("Spell", "soul", LuaScriptInterface::luaSpellSoul);
 	registerMethod("Spell", "range", LuaScriptInterface::luaSpellRange);
 	registerMethod("Spell", "isPremium", LuaScriptInterface::luaSpellPremium);
@@ -3287,6 +3290,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Spell", "needTarget", LuaScriptInterface::luaSpellNeedTarget);
 	registerMethod("Spell", "needWeapon", LuaScriptInterface::luaSpellNeedWeapon);
 	registerMethod("Spell", "needLearn", LuaScriptInterface::luaSpellNeedLearn);
+	registerMethod("Spell", "getSpellByName", LuaScriptInterface::luaSpellGetByName);
 	registerMethod("Spell", "isSelfTarget", LuaScriptInterface::luaSpellSelfTarget);
 	registerMethod("Spell", "isBlocking", LuaScriptInterface::luaSpellBlocking);
 	registerMethod("Spell", "isAggressive", LuaScriptInterface::luaSpellAggressive);
@@ -17529,6 +17533,23 @@ int LuaScriptInterface::luaSpellManaPercent(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaSpellPrice(lua_State* L)
+{
+	// spell:price()
+	Spell* spell = getUserdata<Spell>(L, 1);
+	if (spell) {
+		if (lua_gettop(L) == 1) {
+			lua_pushnumber(L, spell->getPrice());
+		} else {
+			spell->setPrice(getNumber<uint32_t>(L, 2));
+			pushBoolean(L, true);
+		}
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 int LuaScriptInterface::luaSpellSoul(lua_State* L)
 {
 	// spell:soul(soul)
@@ -17645,6 +17666,32 @@ int LuaScriptInterface::luaSpellNeedLearn(lua_State* L)
 	} else {
 		lua_pushnil(L);
 	}
+	return 1;
+}
+
+int LuaScriptInterface::luaSpellGetByName(lua_State* L)
+{
+	// spell:getSpellByName(name)
+	InstantSpell* spell;
+
+	std::string spellName = getString(L, 1);
+	spell = g_spells->getInstantSpellByName(spellName);
+
+	if (spell) {
+		lua_createtable(L, 0, 8);
+		setField(L, "name", spell->getName());
+		setField(L, "words", spell->getWords());
+		setField(L, "level", spell->getLevel());
+		setField(L, "mlevel", spell->getMagicLevel());
+		setField(L, "mana", spell->getMana());
+		setField(L, "manapercent", spell->getManaPercent());
+		setField(L, "premium", spell->isPremium());
+		setField(L, "price", spell->getPrice());
+		setMetatable(L, -1, "Spell");
+	} else {
+		lua_pushnil(L);
+	}
+
 	return 1;
 }
 
