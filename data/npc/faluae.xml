@@ -2,4 +2,8 @@
 <npc name="Faluae" walkinterval="2000" floorchange="0" script="faluae.lua">
 	<health now="100" max="100"/>
 	<look type="62"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="find person,2:3:6:7;light,2:3:6:7;great light,2:3:6:7,food,3:7" />
+	</parameters>
 </npc>
