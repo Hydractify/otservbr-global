@@ -968,11 +968,11 @@ if Modules == nil then
 		local parameters = {
 			spell = spell,
 			module = self,
-			vocations = vocations
+			vocations = vocations,
+			strict = true
 		}
-		keywords = string.split(string.lower(spell.name), "%s")
 
-		local node = self.npcHandler.keywordHandler:addKeyword(keywords, ShopModule.learnSpell, parameters)
+		local node = self.npcHandler.keywordHandler:addKeyword({ spell.name }, ShopModule.learnSpell, parameters)
 		node:addChildKeyword(SHOP_YESWORD, ShopModule.onSpellConfirm, parameters)
 		node:addChildKeyword(SHOP_NOWORD, ShopModule.onSpellDecline, parameters)
 	end
@@ -999,7 +999,7 @@ if Modules == nil then
 					.. " You can also tell me for which level you would like to learn a spell, if you prefer that."
 			}
 		)
-		node:addChildKeyword("level", ShopModule.onSpellLevel, { module = self, spells = spells })
+		node:addChildKeyword({ "level" }, ShopModule.onSpellLevel, { module = self, spells = spells })
 	end
 
 	function ShopModule:getShopItem(itemId, itemSubType)
@@ -1380,7 +1380,7 @@ if Modules == nil then
 				local msg = npcHandler:getMessage(MESSAGE_ONLEARNEDSPELL)
 				msg = npcHandler:parseMessage(msg, parseInfo)
 				npcHandler:say(msg, cid)
-			elseif hasGoodVocation then
+			elseif not hasGoodVocation then
 				local msg = npcHandler:getMessage(MESSAGE_ONCANTSELLVOCATIONSPELL)
 				msg = npcHandler:parseMessage(msg, parseInfo)
 				npcHandler:say(msg, cid)

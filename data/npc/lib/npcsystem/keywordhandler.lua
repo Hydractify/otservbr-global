@@ -58,6 +58,16 @@ if KeywordHandler == nil then
 			return true
 		end
 
+		if self.parameters.strict == true and #self.keywords == 1 then
+			local keyword = self.keywords[1]
+
+			if (type(keyword) == 'string') then
+				if (keyword:lower() == message:lower()) then
+					return true
+				end
+			end
+		end
+
 		local data = {}
 		local last = 0
 		for _, keyword in ipairs(self.keywords) do
