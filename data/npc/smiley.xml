@@ -9,5 +9,8 @@
 		<parameter key="message_greet" value="... Greeeeeetiiiingssss..."/>
 		<parameter key="message_farewell" value="... Good... Bye"/>
 		<parameter key="message_walkaway" value="... Good... Bye"/>
+
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Chill Out,2:6;Magic Patch,2:6;Mud Attack,2:6;Apprentice's Strike,2:6;Find Person,2:6;Light,2:6;Light Healing,2:6;Cure Poison,2:6;Great Light,2:6;Food,2:6;Magic Shield,2:6;Poison Field,2:6;Cure Poison Rune,2:6;Intense Healing Rune,2:6;Fire Field,2:6;Light Magic Missile,2:6;Convince Creature,2:6;Destroy Field,2:6;Energy Field,2:6;Ice Wave,2:6;Intense Healing,2:6;Creature Illusion,2:6;Ultimate Healing Rune,2:6;Stalagmite,2:6;Heavy Magic Missile,2:6;Summon Creature,2:6;Chameleon,2:6;Firebomb,2:6;Poison Wall,2:6;Ultimate Healing,2:6;Avalanche,2:6;Explosion,2:6;Fire Wall,2:6;Invisibility,2:6;Terra Wave,2:6;Energy Wave,2:6"/>
 	</parameters>
 </npc>

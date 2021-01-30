@@ -2,4 +2,8 @@
 <npc name="Trisha" walkinterval="2000" floorchange="0" script="trisha.lua">
 	<health now="100" max="100"/>
 	<look type="142" head="94" body="67" legs="38" feet="95" addons="1"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Find Person,4:8;Light,4:8;Cure Poison,4:8;Wound Cleansing,4:8;Great Light,4:8" />
+	</parameters>
 </npc>

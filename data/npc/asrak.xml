@@ -2,4 +2,8 @@
 <npc name="Asrak" walkinterval="2000" floorchange="0" script="asrak.lua">
 	<health now="100" max="100"/>
 	<look type="29" head="10" body="20" legs="30" feet="40" addons="0"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Find Person,3:7:4:8;Light,3:7:4:8;Light Healing,3:7;Cure Poison,3:7:4:8;Great Light,3:7:4:8;Conjure Arrow,3:7;Destroy Field,3:7;Intense Healing,3:7;Conjure Explosive Arrow,3:7;Divine Healing,3:7;Wound Cleansing,4:8"/>
+	</parameters>
 </npc>
