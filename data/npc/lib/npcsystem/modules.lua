@@ -1364,13 +1364,15 @@ if Modules == nil then
 			[TAG_ITEMNAME] = spell.name
 		}
 
-		local hasBadVocation = false
+		local hasGoodVocation = false
 		if next(vocations) ~= nil then
 			for _, v in pairs(vocations) do
 				if (player:getVocation():getId() == v) then
-					hasBadVocation = true
+					hasGoodVocation = true
 				end
 			end
+		else
+			hasGoodVocation = true
 		end
 
 		if player:isPremium() or spell.premium == 0 then
@@ -1378,7 +1380,7 @@ if Modules == nil then
 				local msg = npcHandler:getMessage(MESSAGE_ONLEARNEDSPELL)
 				msg = npcHandler:parseMessage(msg, parseInfo)
 				npcHandler:say(msg, cid)
-			elseif hasBadVocation then
+			elseif hasGoodVocation then
 				local msg = npcHandler:getMessage(MESSAGE_ONCANTSELLVOCATIONSPELL)
 				msg = npcHandler:parseMessage(msg, parseInfo)
 				npcHandler:say(msg, cid)
