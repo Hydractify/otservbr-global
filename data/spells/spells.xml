@@ -461,7 +461,7 @@
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" />
 	</instant>
-	<instant group="healing" spellid="123" name="Wound Cleansing" words="exura ico" lvl="10" mana="40" prem="0" selftarget="1" aggressive="0" exhaustion="1000" groupcooldown="1000" needlearn="1" price="0" script="healing/wound cleansing.lua">
+	<instant group="healing" spellid="123" name="Wound Cleansing" words="exura ico" lvl="8" mana="40" prem="0" selftarget="1" aggressive="0" exhaustion="1000" groupcooldown="1000" needlearn="1" price="0" script="healing/wound cleansing.lua">
 		<vocation name="Knight" />
 		<vocation name="Elite Knight" />
 	</instant>
