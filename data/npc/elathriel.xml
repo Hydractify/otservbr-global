@@ -2,4 +2,8 @@
 <npc name="Elathriel" walkinterval="2000" floorchange="0" script="elathriel.lua">
 	<health now="100" max="100"/>
 	<look type="64"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Light Magic Missile,2:6;Ice Wave,2:6;Stalagmite,2:6;Heavy Magic Missile,2:6;Avalanche,2:6;Explosion,2:6;Terra Wave,2:6"/>
+	</parameters>
 </npc>

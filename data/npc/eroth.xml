@@ -2,4 +2,8 @@
 <npc name="Eroth" walkinterval="2000" floorchange="0" script="eroth.lua">
 	<health now="100" max="100"/>
 	<look type="63"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Poison Field,2:6;Magic Shield,2:6;Fire Field,2:6;Convince Creature,2:6;Destroy Field,2:6:3:7;Energy Field,2:6;Creature Illusion,2:6;Summon Creature,2:6;Firebomb,2:6;Chameleon,2:6;Poison Wall,2:6;Invisibility,2:6;Energy Wall,2:6"/>
+	</parameters>
 </npc>

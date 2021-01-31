@@ -2,4 +2,8 @@
 <npc name="Maealil" walkinterval="2000" floorchange="0" script="maealil.lua">
 	<health now="100" max="100"/>
 	<look type="63"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Light Healing,2:3:6:7;Cure Poison,2:3:6:7;Intense Healing,2:3:6:7;Cure Poison Rune,2:6;Intense Healing Rune,2:6;Ultimate Healing Rune,2:6;Ultimate Healing,2:6"/>
+	</parameters>
 </npc>
