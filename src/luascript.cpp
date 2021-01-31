@@ -2083,6 +2083,17 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(WEBHOOK_COLOR_WARNING);
 	registerEnum(WEBHOOK_COLOR_RAID);
 
+	// Spell group types
+	registerEnum(SPELLGROUP_NONE);
+	registerEnum(SPELLGROUP_ATTACK);
+	registerEnum(SPELLGROUP_HEALING);
+	registerEnum(SPELLGROUP_SUPPORT);
+	registerEnum(SPELLGROUP_SPECIAL);
+	registerEnum(SPELLGROUP_CONJURE);
+	registerEnum(SPELLGROUP_CRIPPLING);
+	registerEnum(SPELLGROUP_FOCUS);
+	registerEnum(SPELLGROUP_ULTIMATESTRIKES);
+
 	// _G
 	registerGlobalVariable("INDEX_WHEREEVER", INDEX_WHEREEVER);
 	registerGlobalBoolean("VIRTUAL_PARENT", true);
@@ -17678,13 +17689,14 @@ int LuaScriptInterface::luaSpellGetByName(lua_State* L)
 	spell = g_spells->getInstantSpellByName(spellName);
 
 	if (spell) {
-		lua_createtable(L, 0, 8);
+		lua_createtable(L, 0, 9);
 		setField(L, "name", spell->getName());
 		setField(L, "words", spell->getWords());
 		setField(L, "level", spell->getLevel());
 		setField(L, "mlevel", spell->getMagicLevel());
 		setField(L, "mana", spell->getMana());
 		setField(L, "manapercent", spell->getManaPercent());
+		setField(L, "group", spell->getGroup());
 		setField(L, "premium", spell->isPremium());
 		setField(L, "price", spell->getPrice());
 		setMetatable(L, -1, "Spell");

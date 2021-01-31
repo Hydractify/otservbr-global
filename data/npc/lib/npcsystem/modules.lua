@@ -981,25 +981,107 @@ if Modules == nil then
 		local npcHandler = self.npcHandler
 		local spells = npcHandler.shopSpells
 
-		local textSpells = ""
-		for k, spell in pairs(spells) do
-			if (#spells == k) then
-				textSpells = textSpells .. "'" .. spell.name .. "'."
+		local textSpells = {
+			attack = "",
+			support = "",
+			healing = "",
+			rune = "",
+			canTeach = ""
+		}
+
+		local createText = function(spellType, spellName)
+			if #textSpells[spellType] == 0 then
+				textSpells[spellType] = spellName
 			else
-				textSpells = textSpells .. "'" .. spell.name .. "', "
+				textSpells[spellType] = textSpells[spellType] .. ", '" .. spellName .. "'"
+			end
+
+			if textSpells.canTeach:match(spellType) == nil then
+				if #textSpells.canTeach == 0 then
+					textSpells.canTeach = spellType .. " spells"
+				else
+					textSpells.canTeach = textSpells.canTeach .. ", " .. spellType .. " spells"
+				end
+			end
+		end
+
+		for k, spell in pairs(spells) do
+			-- Rune spells
+			-- Has to be checked first and the rest nested since rune spells don't have their own group
+			if spell.words:match("^ad") ~= nil then
+				createText("rune", spell.name)
+			else
+				-- Attack spells
+				if spell.group == SPELLGROUP_ATTACK then
+					createText("attack", spell.name)
+				end
+
+				-- Support spells
+				if spell.group == SPELLGROUP_SUPPORT then
+					createText("support", spell.name)
+				end
+
+				-- Healing spells
+				if spell.group == SPELLGROUP_HEALING then
+					createText("healing", spell.name)
+				end
 			end
 		end
 
 		local node = self.npcHandler.keywordHandler:addKeyword(
-			{ "spell" },
+			{ "^spell" },
 			StdModule.say,
 			{
 				npcHandler = self.npcHandler,
-				text = "I can teach " .. textSpells
+				text = "I can teach " .. textSpells.canTeach .. ". What kind of spell do you wish to learn?"
 					.. " You can also tell me for which level you would like to learn a spell, if you prefer that."
 			}
 		)
 		node:addChildKeyword({ "level" }, ShopModule.onSpellLevel, { module = self, spells = spells })
+
+		if #textSpells.attack ~= 0 then
+			node:addChildKeyword(
+				{ "attack", "spell" },
+				StdModule.say,
+				{
+					npcHandler = self.npcHandler,
+					text = "In this category I have " .. textSpells.attack .. "."
+				}
+			)
+		end
+
+		if #textSpells.support ~= 0 then
+			node:addChildKeyword(
+				{ "support", "spell" },
+				StdModule.say,
+				{
+					npcHandler = self.npcHandler,
+					text = "In this category I have " .. textSpells.support .. "."
+				}
+			)
+		end
+
+		if #textSpells.healing ~= 0 then
+			node:addChildKeyword(
+				{ "healing", "spell" },
+				StdModule.say,
+				{
+					npcHandler = self.npcHandler,
+					text = "In this category I have " .. textSpells.healing .. "."
+				}
+			)
+		end
+
+		if #textSpells.rune ~= 0 then
+			node:addChildKeyword(
+				{ "rune", "spell" },
+				StdModule.say,
+				{
+					npcHandler = self.npcHandler,
+					text = "In this category I have " .. textSpells.rune .. "."
+				}
+			)
+		end
 	end
 
 	function ShopModule:getShopItem(itemId, itemSubType)
@@ -1461,7 +1543,7 @@ if Modules == nil then
 		if (#filteredSpells == 0) then
 			npcHandler:say("I don't have any spells for level " .. level .. ".", cid)
 		else
-			npcHandler:say("I have " .. filteredSpells .. " that are level" .. level .. ".", cid)
+			npcHandler:say("I have " .. filteredSpells .. " that are level " .. level .. ".", cid)
 		end
 
 		return true

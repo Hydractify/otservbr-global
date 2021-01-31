@@ -61,8 +61,8 @@ if KeywordHandler == nil then
 		if self.parameters.strict == true and #self.keywords == 1 then
 			local keyword = self.keywords[1]
 
-			if (type(keyword) == 'string') then
-				if (keyword:lower() == message:lower()) then
+			if type(keyword) == 'string' then
+				if keyword:lower() == message:lower() then
 					return true
 				end
 			end
