@@ -2,4 +2,8 @@
 <npc name="Muriel" walkinterval="2000" floorchange="0" script="muriel.lua">
 	<health now="100" max="100"/>
 	<look type="130" head="115" body="94" legs="97" feet="76" addons="0"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Find Person,1:5;Light,1:5;Light Healing,1:5;Cure Poison,1:5;Great Light,1:5;Poison Field,1:5;Magic Shield,1:5;Fire Field,1:5;Light Magic Missile,1:5;Destroy Field,1:5;Energy Field,1:5;Fire Wave,1:5;Intense Healing,1:5;Energy Beam,1:5;Creature Illusion,1:5;Stalagmite,1:5;Summon Creature,1:5;Heavy Magic Missile,1:5;Firebomb,1:5;Poison Wall,1:5;Great Fireball,1:5;Ultimate Healing,1:5;Explosion,1:5;Fire Wall,1:5;Invisibility,1:5;Energy Wave,1:5;Energy Wall,1:5;Sudden Death,1:5"/>
+	</parameters>
 </npc>

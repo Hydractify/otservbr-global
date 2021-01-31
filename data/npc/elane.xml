@@ -4,6 +4,7 @@
 	<look type="137" head="96" body="101" legs="120" feet="120" addons="3"/>
 	<parameters>
 		<parameter key="module_shop" value="1"/>
-		<parameter key="shop_sellable" value="sniper gloves, 5875, 2000;"/>
+		<parameter key="shop_sellable" value="sniper gloves,5875,2000;"/>
+		<parameter key="shop_spells" value="Find Person,3:7;Light,3:7;Light Healing,3:7;Cure Poison,3:7;Great Light,3:7;Conjure Arrow,3:7;Destroy Field,3:7;Intense Healing,3:7;Conjure Explosive Arrow,3:7;Divine Healing,3:7"/>
 	</parameters>
 </npc>
