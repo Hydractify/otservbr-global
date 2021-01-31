@@ -993,14 +993,14 @@ if Modules == nil then
 			if #textSpells[spellType] == 0 then
 				textSpells[spellType] = spellName
 			else
-				textSpells[spellType] = textSpells[spellType] .. ", '" .. spellName .. "'"
+				textSpells[spellType] = textSpells[spellType] .. ", '{" .. spellName .. "}'"
 			end
 
 			if textSpells.canTeach:match(spellType) == nil then
 				if #textSpells.canTeach == 0 then
-					textSpells.canTeach = spellType .. " spells"
+					textSpells.canTeach = "{" .. spellType .. " spells}"
 				else
-					textSpells.canTeach = textSpells.canTeach .. ", " .. spellType .. " spells"
+					textSpells.canTeach = textSpells.canTeach .. ", {" .. spellType .. " spells}"
 				end
 			end
 		end
@@ -1533,9 +1533,9 @@ if Modules == nil then
 		for k, spell in pairs(spells) do
 			if (spell.level == level) then
 				if (#spells == k) then
-					filteredSpells = filteredSpells .. "'" .. spell.name .. "'"
+					filteredSpells = filteredSpells .. "'{" .. spell.name .. "}'"
 				else
-					filteredSpells = filteredSpells .. "'" .. spell.name .. "', "
+					filteredSpells = filteredSpells .. "'{" .. spell.name .. "}', "
 				end
 			end
 		end
