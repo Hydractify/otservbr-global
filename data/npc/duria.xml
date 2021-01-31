@@ -2,4 +2,8 @@
 <npc name="Duria" walkinterval="2000" floorchange="0" script="duria.lua">
 	<health now="100" max="100"/>
 	<look type="70"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Find Person,4:8;Light,4:8;Cure Poison,4:8;Wound Cleansing,4:8;Great Light,4:8"/>
+	</parameters>
 </npc>
