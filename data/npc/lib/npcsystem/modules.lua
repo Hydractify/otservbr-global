@@ -1614,7 +1614,7 @@ if Modules == nil then
 		local player = Player(cid)
 
 		local parseInfo = {
-			[TAG_TOTALCOST] = spell.price,
+			[TAG_TOTALCOST] = string.format("%d", spell.price),
 			[TAG_ITEMNAME] = spell.name
 		}
 
