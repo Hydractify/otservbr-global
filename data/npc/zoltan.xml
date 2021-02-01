@@ -2,4 +2,8 @@
 <npc name="Zoltan" walkinterval="2000" floorchange="0" script="zoltan.lua">
 	<health now="100" max="100"/>
 	<look type="130" head="95" body="94" legs="95" feet="76" addons="0"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Energybomb,1:5;Rage of the Skies,1:5;Hell's Core,1:5;Ultimate Flame Strike,1:5;Ultimate Energy Strike,1:5;Mass Healing,2:6;Wrath of Nature,2:6;Eternal Winter,2:6;Paralyze,2:6;Ultimate Ice Strike,2:6;Ultimate Terra Strike,2:6;Divine Caldera,3:7;Swift Foot,3:7;Sharpshooter,3:7;Protector,4:8;Blood Rage,4:8;Fierce Berserk,4:8"/>
+	</parameters>
 </npc>

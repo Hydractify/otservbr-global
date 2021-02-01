@@ -2,4 +2,8 @@
 <npc name="Puffels" walkinterval="2000" floorchange="0" script="puffels.lua">
 	<health now="100" max="100"/>
 	<look type="21"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Find Person,4:8;Light,4:8;Magic Rope,4:8;Cure Poison,4:8;Wound Cleansing,4:8;Levitate,4:8;Great Light,4:8;Haste,4:8;Charge,4:8;Whirlwind Throw,4:8;Groundshaker,4:8;Berserk,4:8;Inflict Wound,4:8;Cure Bleeding,4:8;Recovery,4:8;Front Sweep,4:8;Intense Wound Cleansing,4:8;Fierce Berserk,4:8;Intense Recovery,4:8;Annihilation,4:8;Knight Familiar,4:8"/>
+	</parameters>
 </npc>

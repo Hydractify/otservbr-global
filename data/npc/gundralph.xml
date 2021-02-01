@@ -2,4 +2,8 @@
 <npc name="Gundralph" walkinterval="2000" floorchange="0" script="gundralph.lua">
 	<health now="100" max="100"/>
 	<look type="9"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Find Person,1:5:2:6;Light,1:5:2:6;Light Healing,1:5:2:6;Magic Rope,1:5:2:6;Cure Poison,1:5:2:6;Levitate,1:5:2:6;Energy Strike,1:5:2:6;Terra Strike,1:5:2:6;Great Light,1:5:2:6;Cancel Magic Shield,1:5:2:6;Haste,1:5:2:6;Flame Strike,1:5:2:6;Poison Field,1:5:2:6;Magic Shield,1:5:2:6;Ice Strike,1:5:2:6;Fire Field,1:5:2:6;Light Magic Missile,1:5:2:6;Death Strike,1:5;Destroy Field,1:5:2:6;Energy Field,1:5:2:6;Fire Wave,1:5;Strong Haste,1:5:2:6;Intense Healing,1:5:2:6;Disintegrate,1:5:2:6;Energy Beam,1:5;Creature Illusion,1:5:2:6;Stalagmite,1:5:2:6;Summon Creature,1:5:2:6;Heavy Magic Missile,1:5:2:6;Ultimate Light,1:5:2:6;Ignite,1:5;Fireball,1:5;Firebomb,1:5:2:6;Soulfire,1:5:2:6;Animate Dead,1:5:2:6;Thunderstorm,1:5;Poison Wall,1:5:2:6;Great Energy Beam,1:5;Ultimate Healing,1:5:2:6;Explosion,1:5:2:6;Magic Wall,1:5;Fire Wall,1:5:2:6;Electrify,1:5;Invisibility,1:5:2:6;Energybomb,1:5;Energy Wave,1:5:2:6;Energy Wall,1:5;Sudden Death,1:5;Lightning,1:5;Strong Flame Strike,1:5;Sorcerer Familiar,1:5;Chill Out,2:6;Magic Patch,2:6;Mud Attack,2:6;Apprentice's Strike,2:6;Food,2:6;Intense Healing Rune,2:6;Cure Poison Rune,2:6;Convince Creature,2:6;Physical Strike,2:6;Ice Wave,2:6;Heal Friend,2:6;Cure Electrification,2:6;Ultimate Healing Rune,2:6;Poisonbomb,2:6;Animate Dead,2:6;Chameleon,2:6;Stone Shower,2:6;Icicle,2:6;Avalanche,2:6;Cure Burning,2:6;Fire Wall,2:6;Mass Healing,2:6;Terra Wave,2:6;Strong Ice Wave,2:6;Cure Bleeding,2:6;Envenom,2:6;Paralyze,2:6;Strong Terra Strike,2:6;Strong Ice Strike,2:6;Druid Familiar,2:6"/>
+	</parameters>
 </npc>
