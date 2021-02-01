@@ -10,5 +10,6 @@
 		<parameter key="shop_sellable" value="
 			amulet of loss, 2173, 45000;
 			broken amulet, 2196, 50000;"/>
+		<parameter key="shop_spells" value="Wild Growth,2:6;Challenge,4:8;Divine Dazzle,3:7;Conjure Wand of Darkness,1:5" />
 	</parameters>
 </npc>
