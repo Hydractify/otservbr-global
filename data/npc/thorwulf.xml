@@ -2,4 +2,8 @@
 <npc name="Thorwulf" walkinterval="2000" floorchange="0" script="thorwulf.lua">
 	<health now="100" max="100"/>
 	<look type="143" head="3" body="58" legs="97" feet="116" addons="1"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="find person,4:8;light,4:8;magic rope,4:8;cure poison,4:8;wound cleansing,4:8;levitate,4:8;great light,4:8;haste,4:8;brutal strike,4:8;charge,4:8;whirlwind throw,4:8;groundshaker,4:8;berserk,4:8;inflict wound,4:8;cure bleeding,4:8;recovery,4:8;front sweep,4:8;intense wound cleansing,4:8;fierce berserk,4:8;intense recovery,4:8;annihilation,4:8;knight familiar,4:8" />
+	</parameters>
 </npc>
