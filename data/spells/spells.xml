@@ -22,7 +22,7 @@
 		<vocation name="Knight" />
 		<vocation name="Elite Knight" />
 	</instant>
-	<instant group="healing" spellid="172" name="Magic Patch" words="exura infir" lvl="1" mana="6" aggressive="0" selftarget="1" exhaustion="1000" groupcooldown="1000" needlearn="1" prem="0" script="healing/magic_patch.lua">
+	<instant group="healing" spellid="172" name="Magic Patch" words="exura infir" lvl="1" mana="6" aggressive="0" selftarget="1" exhaustion="1000" groupcooldown="1000" needlearn="0" prem="0" script="healing/magic_patch.lua">
 		<vocation name="Sorcerer" />
 		<vocation name="Druid" />
 		<vocation name="Paladin" />
@@ -30,11 +30,11 @@
 		<vocation name="Elder Druid" />
 		<vocation name="Royal Paladin" />
 	</instant>
-	<instant group="attack" spellid="173" name="Chill Out" words="exevo infir frigo hur" lvl="1" mana="8" aggressive="1" direction="1" exhaustion="4000" groupcooldown="2000" needlearn="1" prem="0" script="attack/chill_out.lua">
+	<instant group="attack" spellid="173" name="Chill Out" words="exevo infir frigo hur" lvl="1" mana="8" aggressive="1" direction="1" exhaustion="4000" groupcooldown="2000" needlearn="0" prem="0" script="attack/chill_out.lua">
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" />
 	</instant>
-	<instant group="attack" spellid="174" name="Mud Attack" words="exori infir tera" lvl="1" mana="6" aggressive="1" range="3" casterTargetOrDirection="1" blockwalls="1" exhaustion="2000" groupcooldown="2000" needlearn="1" prem="0" script="attack/mud_attack.lua">
+	<instant group="attack" spellid="174" name="Mud Attack" words="exori infir tera" lvl="1" mana="6" aggressive="1" range="3" casterTargetOrDirection="1" blockwalls="1" exhaustion="2000" groupcooldown="2000" needlearn="0" prem="0" script="attack/mud_attack.lua">
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" />
 	</instant>
