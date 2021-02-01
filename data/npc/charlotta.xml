@@ -2,4 +2,8 @@
 <npc name="Charlotta" walkinterval="2000" floorchange="0" script="charlotta.lua">
 	<health now="100" max="100"/>
 	<look type="157" head="38" body="97" legs="115" feet="95" addons="1"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Chill Out,2:6;Magic Patch,2:6;Mud Attack,2:6;Apprentice's Strike,2:6;Find Person,2:6;Light,2:6;Light Healing,2:6;Magic Rope,2:6;Cure Poison,2:6;Levitate,2:6;Energy Strike,2:6;Terra Strike,2:6;Great Light,2:6;Haste,2:6;Flame Strike,2:6;Food,2:6;Poison Field,2:6;Magic Shield,2:6;Ice Strike,2:6;Fire Field,2:6;Intense Healing Rune,2:6;Cure Poison Rune,2:6;Light Magic Missile,2:6;Convince Creature,2:6;Physical Strike,2:6;Destroy Field,2:6;Energy Field,2:6;Ice Wave,2:6;Heal Friend,2:6;Intense Healing,2:6;Strong Haste,2:6;Disintegrate,2:6;Cure Electrification,2:6;Creature Illusion,2:6;Ultimate Healing Rune,2:6;Stalagmite,2:6;Poisonbomb,2:6;Summon Creature,2:6;Heavy Magic Missile,2:6;Ultimate Light,2:6;Animate Dead,2:6;Soulfire,2:6;Firebomb,2:6;Chameleon,2:6;Stone Shower,2:6;Icicle,2:6;Poison Wall,2:6;Avalanche,2:6;Ultimate Healing,2:6;Cure Burning,2:6;Explosion,2:6;Fire Wall,2:6;Invisibility,2:6;Mass Healing,2:6;Terra Wave,2:6;Strong Ice Wave,2:6;Energy Wall,2:6;Cure Bleeding,2:6;Envenom,2:6;Paralyze,2:6;Strong Terra Strike,2:6;Strong Ice Strike,2:6;Druid Familiar,2:6"/>
+	</parameters>
 </npc>

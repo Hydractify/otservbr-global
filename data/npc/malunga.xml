@@ -78,5 +78,6 @@
 			winged tail, 11230, 800;
 			yielocks, 13942, 600;
 			yielowax, 13881, 600;"/>
+		<parameter key="shop_spells" value="Find Person,1:5;Light,1:5;Light Healing,1:5;Magic Rope,1:5;Cure Poison,1:5;Levitate,1:5;Energy Strike,1:5;Terra Strike,1:5;Great Light,1:5;Haste,1:5;Flame Strike,1:5;Poison Field,1:5;Magic Shield,1:5;Ice Strike,1:5;Fire Field,1:5;Light Magic Missile,1:5;Death Strike,1:5;Destroy Field,1:5;Energy Field,1:5;Fire Wave,1:5;Strong Haste,1:5;Intense Healing,1:5;Disintegrate,1:5;Energy Beam,1:5;Creature Illusion,1:5;Stalagmite,1:5;Summon Creature,1:5;Heavy Magic Missile,1:5;Ultimate Light,1:5;Ignite,1:5;Fireball,1:5;Firebomb,1:5;Soulfire,1:5;Animate Dead,1:5;Thunderstorm,1:5;Poison Wall,1:5;Great Energy Beam,1:5;Ultimate Healing,1:5;Explosion,1:5;Magic Wall,1:5;Fire Wall,1:5;Electrify,1:5;Invisibility,1:5;Energybomb,1:5;Energy Wave,1:5;Energy Wall,1:5;Sudden Death,1:5;Lightning,1:5;Strong Flame Strike,1:5;Curse,1:5;Strong Energy Strike,1:5;Sorcerer Familiar,1:5"/>
 	</parameters>
 </npc>
