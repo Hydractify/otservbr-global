@@ -1462,10 +1462,6 @@ if Modules == nil then
 				local msg = npcHandler:getMessage(MESSAGE_ONLEARNEDSPELL)
 				msg = npcHandler:parseMessage(msg, parseInfo)
 				npcHandler:say(msg, cid)
-			elseif not hasGoodVocation then
-				local msg = npcHandler:getMessage(MESSAGE_ONCANTSELLVOCATIONSPELL)
-				msg = npcHandler:parseMessage(msg, parseInfo)
-				npcHandler:say(msg, cid)
 			elseif not player:canLearnSpell(spell.name) then
 				local msg = ""
 
@@ -1475,6 +1471,10 @@ if Modules == nil then
 					msg = npcHandler:getMessage(MESSAGE_ONCANTVOCATIONLEARNSPELL)
 				end
 
+				msg = npcHandler:parseMessage(msg, parseInfo)
+				npcHandler:say(msg, cid)
+			elseif not hasGoodVocation then
+				local msg = npcHandler:getMessage(MESSAGE_ONCANTSELLVOCATIONSPELL)
 				msg = npcHandler:parseMessage(msg, parseInfo)
 				npcHandler:say(msg, cid)
 			elseif not player:removeMoneyNpc(spell.price) then
