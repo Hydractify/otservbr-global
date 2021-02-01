@@ -2,4 +2,8 @@
 <npc name="Razan" walkinterval="2000" floorchange="0" script="razan.lua">
 	<health now="100" max="100"/>
 	<look type="146" head="19" body="19" legs="9" feet="58" addons="3"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_spells" value="Find Person,3:7:4:8;Light,3:7:4:8;Light Healing,3:7;Magic Rope,3:7:4:8;Cure Poison,3:7:4:8;Levitate,3:7:4:8;Great Light,3:7:4:8;Conjure Arrow,3:7;Haste,3:7:4:8;Destroy Field,3:7;Intense Healing,3:7;Disintegrate,3:7;Ethereal Spear,3:7;Conjure Explosive Arrow,3:7;Cancel Invisibility,3:7;Holy Missile,3:7;Divine Healing,3:7;Divine Missile,3:7;Enchant Spear,3:7;Divine Caldera,3:7;Recovery,3:7:4:8;Salvation,3:7;Holy Flash,3:7;Cure Curse,3:7;Strong Ethereal Spear,3:7;Intense Recovery,3:7:4:8;Paladin Familiar,3:7;Wound Cleansing,4:8;Brutal Strike,4:8;Charge,4:8;Whirlwind Throw,4:8;Groundshaker,4:8;Berserk,4:8;Inflict Wound,4:8;Cure Bleeding,4:8;Front Sweep,4:8;Intense Wound Cleansing,4:8;Fierce Berserk,4:8;Annihilation,4:8;Knight Familiar,4:8"/>
+	</parameters>
 </npc>
