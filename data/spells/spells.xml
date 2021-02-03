@@ -787,14 +787,6 @@
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" />
 	</instant>
-	<instant group="support" spellid="116" name="Light Stone Shower" words="adori infir mas tera" lvl="1" mana="6" soul="3" prem="1" cooldown="2000" groupcooldown="2000" needlearn="0" script="conjuring/light_stone_shower_rune.lua">
-		<vocation name="Sorcerer" />
-		<vocation name="Druid" />
-		<vocation name="Paladin" />
-		<vocation name="Master Sorcerer" />
-		<vocation name="Elder Druid" />
-		<vocation name="Royal Paladin" />
-	</instant>
 	<instant group="support" spellid="117" name="Thunderstorm" words="adori mas vis" lvl="28" mana="430" soul="3" prem="1" cooldown="2000" groupcooldown="2000" needlearn="1" price="1100" script="conjuring/thunderstorm_rune.lua">
 		<vocation name="Sorcerer" />
 		<vocation name="Master Sorcerer" />
