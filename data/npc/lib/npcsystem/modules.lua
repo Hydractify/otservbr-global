@@ -991,7 +991,7 @@ if Modules == nil then
 
 		local createText = function(spellType, spellName)
 			if #textSpells[spellType] == 0 then
-				textSpells[spellType] = spellName
+				textSpells[spellType] = "{" .. spellName .. "}"
 			else
 				textSpells[spellType] = textSpells[spellType] .. ", '{" .. spellName .. "}'"
 			end
