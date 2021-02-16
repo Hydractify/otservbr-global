@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <events>
-	<event name="Double tibia coins" startdate="02/08/2021" enddate="02/12/2021">
-		<ingame exprate="100" lootrate="100" spawnrate="100" skillrate="100" />
-		<description description="Double tibia coins in our Discord server!" />
-		<colors colordark="#f2bf20" colorlight="#db2c0d" />
-		<details displaypriority="1" isseasonal="0" specialevent="0" />
+	<event name="Otservbr example 1" startdate="11/03/2020" enddate="11/30/2020" script="example.lua" >
+		<ingame exprate="250" lootrate="200" spawnrate="100" skillrate="200" />
+		<description description="Otserver br example 1 description double exp and a half, double loot !chance!, regular spawn and double skill" />
+		<colors colordark="#235c00" colorlight="#2d7400" />
+		<details displaypriority="6" isseasonal="0" specialevent="0" />
 	</event>
-	<event name="Double XP and spawnrate" startdate="02/15/2021" enddate="02/19/2021">
-		<ingame exprate="200" lootrate="150" spawnrate="200" skillrate="200" />
-		<description description="Double experience gain, spawnrate of monsters and improved loot!" />
-		<colors colordark="#3bc43a" colorlight="#249b24" />
-		<details displaypriority="1" isseasonal="0" specialevent="1" />
-	</event>
-	<event name="Referral event" startdate="02/17/2021" enddate="02/27/2021">
-		<ingame exprate="100" lootrate="100" spawnrate="100" skillrate="100" />
-		<description description="Referral event, gain tibia coins and in-game goodies! Check it out in Discord." />
-		<colors colordark="#c88ffb" colorlight="#e2b6f7" />
-		<details displaypriority="2" isseasonal="0" specialevent="0" />
+	<event name="Otservbr example 2" startdate="10/2/2020" enddate="11/7/2020" script="example.lua" >
+		<ingame exprate="50" lootrate="300" spawnrate="150" skillrate="100" />
+		<description description="Otserver br example 2 description 50% less exp, triple loot !chance!, 50% faster spawn and regular skill" />
+		<colors colordark="#735D10" colorlight="#8B6D05" />
+		<details displaypriority="6" isseasonal="0" specialevent="0" />
 	</event>
 </events>
