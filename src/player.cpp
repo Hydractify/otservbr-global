@@ -5252,9 +5252,9 @@ void Player::setGuild(Guild* newGuild)
 	}
 }
 
-uint32_t Player::getReferralPlayer()
+uint32_t Player::getReferringPlayer()
 {
-	return IOLoginData::getReferralPlayer(getAccount());
+	return IOLoginData::getReferringPlayer(getAccount());
 }
 
 std::vector<uint32_t> Player::getReferredPlayers()
@@ -5262,9 +5262,9 @@ std::vector<uint32_t> Player::getReferredPlayers()
 	return IOLoginData::getReferredPlayers(getAccount());
 }
 
-void Player::addReferralPlayer(uint32_t referralId)
+void Player::setReferringPlayer(uint32_t referralId)
 {
-	IOLoginData::addReferralPlayer(getAccount(), referralId);
+	IOLoginData::setReferringPlayer(getAccount(), referralId);
 }
 
 //Custom: Anti bug of market

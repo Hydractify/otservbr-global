@@ -1,6 +1,10 @@
 local refer = TalkAction("!refer")
 
 local rewards = {
+	[1] = function(player)
+		player:addTibiaCoins(250)
+		player:setBankBalance(player:getBankBalance() + 5000)
+	end,
 	[2] = function(player)
 		player:addTibiaCoins(250)
 		player:setBankBalance(player:getBankBalance() + 5000)
@@ -17,46 +21,44 @@ local rewards = {
 	end,
 	[4] = function(player)
 		player:addTibiaCoins(1000)
-		referredPlayer:setBankBalance(player:getBankBalance() + 50000)
+		referringPlayer:setBankBalance(player:getBankBalance() + 50000)
 
 		player:addItem("Golden Helmet", 1)
 	end
 }
 
 function refer.onSay(player, words, param)
-	local referredPlayer = Player(param)
+	local referringPlayer = Player(param)
 
-	if not referredPlayer then
+	if not referringPlayer then
 		player:sendCancelMessage("Player '" .. param .. "' not found.")
 		return false
 	end
 
-	if referredPlayer == player or player:getAccountId() == referredPlayer:getAccountId() or player:getIp() == referredPlayer:getIp() then
-		player:sendCancelMessage("You can't refer yourself.")
+	if referringPlayer == player or player:getAccountId() == referredPlayer:getAccountId() or player:getIp() == referredPlayer:getIp() then
+		player:sendCancelMessage("You can't be referred by yourself.")
 		return false
 	end
 
-	if not player:addReferral(referredPlayer:getAccountId()) then
-		player:sendCancelMessage("You already referred someone!")
+	if not player:setReferring(referringPlayer:getAccountId()) then
+		player:sendCancelMessage("You already were referred by someone!")
 		return false
 	end
 
 	player:addTibiaCoins(500)
 	player:setBankBalance(player:getBankBalance() + 10000)
 
-	local referrals = referredPlayer:getReferred()
+	local referrals = referringPlayer:getReferred()
 
 	if not referrals then
-		referredPlayer:addTibiaCoins(250)
-		referredPlayer:setBankBalance(player:getBankBalance() + 5000)
-
-		player:sendTextMessage(MESSAGE_GAME_HIGHLIGHT, "You referred '" .. param .. "'!")
-		return false
+		rewards[1](referringPlayer)
+	else
+		if #rewards < #referrals then
+			rewards[#referrals](referringPlayer)
+		end
 	end
 
-	rewards[#referrals](referredPlayer)
-
-	player:sendTextMessage(MESSAGE_GAME_HIGHLIGHT, "You referred '" .. param .. "'!")
+	player:sendTextMessage(MESSAGE_GAME_HIGHLIGHT, "You were referred by '" .. param .. "'!")
 	return false
 end
 

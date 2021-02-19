@@ -1427,14 +1427,14 @@ void IOLoginData::removePremiumDays(uint32_t accountId, int32_t removeDays)
   Database::getInstance().executeQuery(query.str());
 }
 
-uint32_t IOLoginData::getReferralPlayer(uint32_t accountId)
+uint32_t IOLoginData::getReferringPlayer(uint32_t accountId)
 {
 	std::ostringstream query;
-	query << "SELECT `referral_id` FROM `accounts` WHERE `id` = " << accountId;
+	query << "SELECT `referring_id` FROM `accounts` WHERE `id` = " << accountId;
 
 	DBResult_ptr result = Database::getInstance().storeQuery(query.str());
 	if (result) {
-		return result->getNumber<uint32_t>("referral_id");
+		return result->getNumber<uint32_t>("referring_id");
 	}
 
 	return 0;
@@ -1445,7 +1445,7 @@ std::vector<uint32_t> IOLoginData::getReferredPlayers(uint32_t accountId)
 	std::vector<uint32_t> entries;
 
 	std::ostringstream query;
-	query << "SELECT `id` FROM `accounts` WHERE `referral_id` = " << accountId;
+	query << "SELECT `id` FROM `accounts` WHERE `referring_id` = " << accountId;
 
 	DBResult_ptr result = Database::getInstance().storeQuery(query.str());
 	if (result) {
@@ -1456,11 +1456,11 @@ std::vector<uint32_t> IOLoginData::getReferredPlayers(uint32_t accountId)
 	return entries;
 }
 
-void IOLoginData::addReferralPlayer(uint32_t accountId, uint32_t referralId)
+void IOLoginData::setReferringPlayer(uint32_t accountId, uint32_t referralId)
 {
 	Database& db = Database::getInstance();
 
 	std::ostringstream query;
-	query << "UPDATE `accounts` SET `referral_id` = " << referralId << " WHERE id = " << accountId;
+	query << "UPDATE `accounts` SET `referring_id` = " << referralId << " WHERE id = " << accountId;
 	db.executeQuery(query.str());
 }

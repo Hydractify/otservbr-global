@@ -2562,8 +2562,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getLastLoginSaved", LuaScriptInterface::luaPlayerGetLastLoginSaved);
 	registerMethod("Player", "getLastLogout", LuaScriptInterface::luaPlayerGetLastLogout);
 
-	registerMethod("Player", "addReferral", LuaScriptInterface::luaPlayerAddReferral);
-	registerMethod("Player", "getReferral", LuaScriptInterface::luaPlayerGetReferral);
+	registerMethod("Player", "setReferring", LuaScriptInterface::luaPlayerSetReferring);
+	registerMethod("Player", "getReferring", LuaScriptInterface::luaPlayerGetReferring);
 	registerMethod("Player", "getReferred", LuaScriptInterface::luaPlayerGetReferred);
 
 	registerMethod("Player", "getAccountType", LuaScriptInterface::luaPlayerGetAccountType);
@@ -9064,15 +9064,15 @@ int LuaScriptInterface::luaPlayerGetLastLogout(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerAddReferral(lua_State* L)
+int LuaScriptInterface::luaPlayerSetReferring(lua_State* L)
 {
-	// player:addReferral()
+	// player:getReferring()
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		if (player->getReferralPlayer()) {
+		if (player->getReferringPlayer()) {
 			pushBoolean(L, false);
 		} else {
-			player->addReferralPlayer(getNumber<uint32_t>(L, 2));
+			player->setReferringPlayer(getNumber<uint32_t>(L, 2));
 			pushBoolean(L, true);
 		}
 	} else {
@@ -9081,12 +9081,12 @@ int LuaScriptInterface::luaPlayerAddReferral(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetReferral(lua_State* L)
+int LuaScriptInterface::luaPlayerGetReferring(lua_State* L)
 {
 	// player:getReferral()
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
-		lua_pushnumber(L, player->getReferralPlayer());
+		lua_pushnumber(L, player->getReferringPlayer());
 	} else {
 		lua_pushnil(L);
 	}

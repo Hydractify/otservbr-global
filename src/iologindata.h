@@ -60,9 +60,9 @@ class IOLoginData
 		static void addPremiumDays(uint32_t accountId, int32_t addDays);
 		static void removePremiumDays(uint32_t accountId, int32_t removeDays);
 
-		static uint32_t getReferralPlayer(uint32_t accountId);
+		static uint32_t getReferringPlayer(uint32_t accountId);
 		static std::vector<uint32_t> getReferredPlayers(uint32_t accountId);
-		static void addReferralPlayer(uint32_t accountId, uint32_t guid);
+		static void setReferringPlayer(uint32_t accountId, uint32_t guid);
 
 	private:
 		using ItemMap = std::map<uint32_t, std::pair<Item*, uint32_t>>;
