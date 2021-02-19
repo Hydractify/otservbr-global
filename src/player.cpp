@@ -5252,6 +5252,21 @@ void Player::setGuild(Guild* newGuild)
 	}
 }
 
+uint32_t Player::getReferralPlayer()
+{
+	return IOLoginData::getReferralPlayer(getAccount());
+}
+
+std::vector<uint32_t> Player::getReferredPlayers()
+{
+	return IOLoginData::getReferredPlayers(getAccount());
+}
+
+void Player::addReferralPlayer(uint32_t referralId)
+{
+	IOLoginData::addReferralPlayer(getAccount(), referralId);
+}
+
 //Custom: Anti bug of market
 bool Player::isMarketExhausted() const {
 	uint32_t exhaust_time = 3000; // half second 500

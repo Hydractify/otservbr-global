@@ -355,6 +355,10 @@ class Player final : public Creature, public Cylinder
 			guildNick = nick;
 		}
 
+		uint32_t getReferralPlayer();
+		std::vector<uint32_t> getReferredPlayers();
+		void addReferralPlayer(uint32_t referralId);
+
 		bool isInWar(const Player* player) const;
 		bool isInWarList(uint32_t guild_id) const;
 

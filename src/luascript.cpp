@@ -2562,6 +2562,10 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getLastLoginSaved", LuaScriptInterface::luaPlayerGetLastLoginSaved);
 	registerMethod("Player", "getLastLogout", LuaScriptInterface::luaPlayerGetLastLogout);
 
+	registerMethod("Player", "addReferral", LuaScriptInterface::luaPlayerAddReferral);
+	registerMethod("Player", "getReferral", LuaScriptInterface::luaPlayerGetReferral);
+	registerMethod("Player", "getReferred", LuaScriptInterface::luaPlayerGetReferred);
+
 	registerMethod("Player", "getAccountType", LuaScriptInterface::luaPlayerGetAccountType);
 	registerMethod("Player", "setAccountType", LuaScriptInterface::luaPlayerSetAccountType);
 
@@ -9054,6 +9058,60 @@ int LuaScriptInterface::luaPlayerGetLastLogout(lua_State* L)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
 		lua_pushnumber(L, player->getLastLogout());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerAddReferral(lua_State* L)
+{
+	// player:addReferral()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		if (player->getReferralPlayer()) {
+			pushBoolean(L, false);
+		} else {
+			player->addReferralPlayer(getNumber<uint32_t>(L, 2));
+			pushBoolean(L, true);
+		}
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetReferral(lua_State* L)
+{
+	// player:getReferral()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		lua_pushnumber(L, player->getReferralPlayer());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetReferred(lua_State* L)
+{
+	// player:getReferred()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		std::vector<uint32_t> players = player->getReferredPlayers();
+
+		if (!players.size()) {
+			lua_pushnil(L);
+			return 1;
+		}
+
+		lua_createtable(L, 0, players.size());
+
+		int index = 0;
+		for (const auto& referredId : players) {
+			lua_pushnumber(L, referredId);
+			lua_rawseti(L, -2, ++index);
+		}
 	} else {
 		lua_pushnil(L);
 	}

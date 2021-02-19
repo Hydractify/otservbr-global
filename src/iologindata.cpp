@@ -531,7 +531,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 	player->charmRuneVamp = result->getNumber<uint16_t>("rune_vamp");
 	player->charmRuneVoid = result->getNumber<uint16_t>("rune_void");
 	player->UsedRunesBit = result->getNumber<int32_t>("UsedRunesBit");
-	player->UnlockedRunesBit = result->getNumber<int32_t>("UnlockedRunesBit");	
+	player->UnlockedRunesBit = result->getNumber<int32_t>("UnlockedRunesBit");
 
 	unsigned long attrBestSize;
 	const char* Bestattr = result->getStream("tracker list", attrBestSize);
@@ -588,7 +588,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
       const std::pair<Item*, int32_t>& pair = it->second;
       Item* item = pair.first;
       int32_t pid = pair.second;
-      
+
       if (pid >= CONST_SLOT_FIRST && pid <= CONST_SLOT_LAST) {
         player->internalAddThing(pid, item);
       } else {
@@ -1064,7 +1064,7 @@ bool IOLoginData::savePlayer(Player* player)
   //player bestiary charms
   query.str(std::string());
   query << "UPDATE `player_charms` SET ";
-  query << "`charm_points` = " << player->charmPoints << ',';  
+  query << "`charm_points` = " << player->charmPoints << ',';
   query << "`charm_expansion` = " << ((player->charmExpansion) ? 1 : 0) << ',';
   query << "`rune_wound` = " << player->charmRuneWound << ',';
   query << "`rune_enflame` = " << player->charmRuneEnflame << ',';
@@ -1425,4 +1425,42 @@ void IOLoginData::removePremiumDays(uint32_t accountId, int32_t removeDays)
   std::ostringstream query;
   query << "UPDATE `accounts` SET `premdays` = `premdays` - " << removeDays << " WHERE `id` = " << accountId;
   Database::getInstance().executeQuery(query.str());
+}
+
+uint32_t IOLoginData::getReferralPlayer(uint32_t accountId)
+{
+	std::ostringstream query;
+	query << "SELECT `referral_id` FROM `accounts` WHERE `id` = " << accountId;
+
+	DBResult_ptr result = Database::getInstance().storeQuery(query.str());
+	if (result) {
+		return result->getNumber<uint32_t>("referral_id");
+	}
+
+	return 0;
+}
+
+std::vector<uint32_t> IOLoginData::getReferredPlayers(uint32_t accountId)
+{
+	std::vector<uint32_t> entries;
+
+	std::ostringstream query;
+	query << "SELECT `id` FROM `accounts` WHERE `referral_id` = " << accountId;
+
+	DBResult_ptr result = Database::getInstance().storeQuery(query.str());
+	if (result) {
+		do {
+			entries.push_back(result->getNumber<uint32_t>("id"));
+		} while (result->next());
+	}
+	return entries;
+}
+
+void IOLoginData::addReferralPlayer(uint32_t accountId, uint32_t referralId)
+{
+	Database& db = Database::getInstance();
+
+	std::ostringstream query;
+	query << "UPDATE `accounts` SET `referral_id` = " << referralId << " WHERE id = " << accountId;
+	db.executeQuery(query.str());
 }
