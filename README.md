@@ -1,49 +1,86 @@
-# OTServ Brasil - Global Server
+<div>
+    <p align="center">
+        <a href="https://www.hydractify.org">
+            <img src="https://www.hydractify.org/logo.png" height="250px" />
+        </a>
+    </p>
+    <p align="center">
+        <a href="https://www.hydractify.org/discord">
+            <img src="https://img.shields.io/discord/298969150133370880.svg?style=flat-square&logo=discord">
+        </a>
+        <a href="https://www.hydractify.org/patreon">
+            <img src="https://img.shields.io/badge/Patreon-support!-fa6956.svg?style=flat-square&logo=patreon" />
+        </a>
+        <a href="https://twitter.com/hydractify">
+            <img src="https://img.shields.io/twitter/follow/hydractify.svg?style=social&logo=twitter">
+        </a>
+        <br />
+        <a href="https://github.com/Hydractify/otservbr-global/issues">
+            <img src="https://img.shields.io/github/issues/Hydractify/otservbr-global.svg?style=flat-square">
+        </a>
+        <a href="https://github.com/Hydractify/otservbr-global/graphs/contributors">
+            <img src="https://img.shields.io/github/contributors/Hydractify/otservbr-global.svg?style=flat-square">
+        </a>
+        <a href="https://github.com/Hydractify/kanna_kobayashi/blob/stable/LICENSE">
+            <img src="https://img.shields.io/github/license/Hydractify/otservbr-global.svg?style=flat-square">
+        </a>
+    </p>
+</div>
 
-## Builds
-[![Build status](https://ci.appveyor.com/api/projects/status/github/opentibiabr/otservbr-global?branch=develop&passingText=develop%20-%20OK&svg=true)](https://ci.appveyor.com/project/opentibiabr/otservbr-global "Download nightly builds for Windows")
-[![Build Status](https://travis-ci.org/opentibiabr/OTServBR-Global.svg?branch=develop)](https://travis-ci.org/opentibiabr/OTServBR-Global "Linux Build Status - Develop Branch")
+# otservbr-global
+Repository for maintaing our custom open tibia server using otservbr-global.
 
-[![Build on MacOS](https://github.com/opentibiabr/otservbr-global/workflows/Build%20on%20MacOS/badge.svg)](https://github.com/opentibiabr/otservbr-global/actions?query=workflow%3A%22Build+on+MacOS%22)
-[![Build on Ubuntu](https://github.com/opentibiabr/otservbr-global/workflows/Build%20on%20Ubuntu/badge.svg)](https://github.com/opentibiabr/otservbr-global/actions?query=workflow%3A%22Build+on+Ubuntu%22)
-[![Build on Windows](https://github.com/opentibiabr/otservbr-global/workflows/Build%20on%20Windows/badge.svg)](https://github.com/opentibiabr/otservbr-global/actions?query=workflow%3A%22Build+on+Windows%22)
+## Getting started
 
-## Docs/Help
-[![Documentation](https://codedocs.xyz/Costallat/otservbr-global.svg)](https://codedocs.xyz/Costallat/otservbr-global/)
-[![Discord Channel](https://img.shields.io/discord/528117503952551936.svg?label=discord)](https://discord.gg/3NxYnyV)
+This server has been tested/used in [Linux], we cannot guarantee it will work in [MacOS] or [Windows], however, it might.
 
-## Project
-OTServ Brasil - Global Server is a free and open-source MMORPG server emulator written in C++. It is a fork of the [Forgotten Server](https://github.com/otland/forgottenserver) project. To connect to the server and to take a stable experience, you can use our [own client](https://forums.otserv.com.br/index.php?/forums/topic/167933-otservbr-global-cliente-tibia-12/) and if you want to edit something, check our [customized tools](https://github.com/opentibiabr/tools).
+### Compiling
 
-You are subject to our code of conduct, read at [this link](https://github.com/opentibiabr/otservbr-global/blob/develop/CODE_OF_CONDUCT.md).
+The steps to compile the server can be found here: https://github.com/otland/forgottenserver/wiki/Compiling
 
+### MySQL
 
-### Getting Started
-* **WARNING: YOU NEED TO UNZIP THE MAP BEFORE START THE SERVER.**
-* [Compiling on Windows](https://forums.otserv.com.br/index.php?/forums/topic/169235-windowsvc2019-compilando-sources-otservbr-global/), alternatively download [nightly builds for Windows](https://ci.appveyor.com/project/opentibiabr/otservbr-global).
+After you built `otbr`, you can proceed to work with `MySql`. You can use whatever user and database name you want, our recommendation is to have `forgottenserver`.
 
-### Issues
-We use the [issue tracker on GitHub](https://github.com/opentibiabr/OTServBR-Global/issues). Keep in mind that everyone who is watching the repository gets notified by e-mail when there is an activity, so be thoughtful and avoid writing comments that aren't meant for an issue (e.g. "+1"). If you'd like for an issue to be fixed faster, you should either fix it yourself and submit a pull request, or place a bounty on the issue.
+After you set up the user and granted permission to the database, you can run the `schema.sql` located in the root of the project. Here is a handy way to do it in [Linux]: `sudo mysql -u root -p forgottenserver < ./schema.sql`
 
-### Special Thanks
-- our partners
-- our crew (majesty, gpedro, eduardo dantas)
-- our testers (raphaellb, petardako, szulcek and olimpotibia)
-- [our contributors](https://github.com/opentibiabr/OTServBR-Global/graphs/contributors)
-- [fear lucien](https://github.com/FearLucien)
-- [cjaker](https://github.com/Eternal-Scripts)
-- [slavidodo](https://github.com/slavidodo)
-- [mignari and our awesome tools](https://github.com/ottools)
-- [mattyx14/otxserver](https://github.com/mattyx14/otxserver) and contributors.
-- [otland/forgottenserver](https://github.com/otland/forgottenserver) and contributors.
-- if we forget someone, we apologize by forgot you. but you know, **forgot**tenserver.
+### Configuration
 
-### Sponsors
-If you want to sponsor here, join on discord and send a message for one of our administrators.
+Copy the `config.lua.dist` and name it `config.lua`, there you want to change the `mysqlUser` to whatever you named the MySql user, `mysqlPass` for it's password (if there is any) and change `mysqlDatabase` to whatever you named the database.
 
-### Partners
-[![Supported by OTServ Brasil](https://forums.otserv.com.br/uploads/monthly_2018_05/otbr.png.9f34d819278e170c73dd155a0ca1b501.png)](https://forums.otserv.com.br)
+You also want to make sure that you have decompressed the `world.zip` file that comes inside `data/world`, otherwise the server will not find a map.
 
-[![Protected by ServerCore](https://mktsc.servercore.com.br/protectedbyservercore.png)](https://bit.ly/1q2q4de)
+Once you are done with that, all you have to do is run the `otbr` that you compiled! Have fun. :)
 
-[![Supported by OTHispano](https://othispano.com/styles/purplefreak/logo3.png)](https://othispano.com/)
+### Documentation
+
+Use this link as reference for everything related to the open tibia server:
+
+- [forgottenserver]
+- [otservbr]
+
+## Differences to the upstream repository
+
+- ~~Discord webhook messages~~ [#2322](https://github.com/opentibiabr/otservbr-global/pull/2322);
+- Integration with [Discord]
+  - Ability to link your account using our fork of [MyAAC] and using our [template];
+  - Grant users tibia coins based on activity, ability to check those coins and gamble them;
+    - https://github.com/Hydractify/guardian_of_tales
+- Exp stages more close to global (2x until level 25, 1.5x until level 50, 1x for 51+);
+- Spell shop added to all NPCs who teach spells, making it a step closer to vanilla.
+
+<!-- LINKS -->
+
+<!-- MISC -->
+[linux]: https://www.linux.org/
+[macos]: https://www.apple.com/macos
+[windows]: https://www.microsoft.com/en-us/windows
+[discord]: https://discord.com/
+
+<!-- DOC -->
+[forgottenserver]: https://github.com/otland/forgottenserver/wiki
+[otservbr]: https://github.com/opentibiabr/otservbr-global/wiki
+
+<!-- DIFF -->
+[myaac]: https://github.com/Hydractify/myaac
+[template]: https://github.com/Hydractify/lego
