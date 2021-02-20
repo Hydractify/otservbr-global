@@ -35,7 +35,7 @@ function refer.onSay(player, words, param)
 		return false
 	end
 
-	if referringPlayer == player or player:getAccountId() == referredPlayer:getAccountId() or player:getIp() == referredPlayer:getIp() then
+	if referringPlayer == player or player:getAccountId() == referringPlayer:getAccountId() or player:getIp() == referringPlayer:getIp() then
 		player:sendCancelMessage("You can't be referred by yourself.")
 		return false
 	end
