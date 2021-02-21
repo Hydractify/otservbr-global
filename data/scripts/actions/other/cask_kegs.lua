@@ -19,44 +19,42 @@ local flasks = Action()
 
 function flasks.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if target:getId() >= 28535 and target:getId() <= 28590 then
-	local house = player:getTile():getHouse()
-	if house and house:canEditAccessList(SUBOWNER_LIST, player) and house:canEditAccessList(doorId, player) or target:getId() >= 28579 then
-	elseif target:getId() >= 28535 and target:getId() < 28579 then
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'Sorry, casks only can be useds inside house.')
-		return false
-	else
-		return false
-	end
+		local house = player:getTile():getHouse()
 
-	if target then
-		local charges = target:getCharges()
-		local itemCount = item:getCount()
- 		if itemCount > charges then
-			itemCount = charges
+		if not house then
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'Sorry, casks can only be used inside a house.')
+			return false
 		end
 
- 		local targetId = targetIdList[target:getId()]
- 		if targetId then
- 			if item:getId() == targetId.itemId then
-				if not(itemCount == item:getCount()) then
-					local potMath = item:getCount() - itemCount
-					if not(item:getParent():isContainer() and item:getParent():addItem(item:getId(), potMath)) then
-						player:addItem(item:getId(), potMath, true)
+		if target then
+			local charges = target:getCharges()
+			local itemCount = item:getCount()
+			if itemCount > charges then
+				itemCount = charges
+			end
+
+			local targetId = targetIdList[target:getId()]
+			if targetId then
+				if item:getId() == targetId.itemId then
+					if not(itemCount == item:getCount()) then
+						local potMath = item:getCount() - itemCount
+						if not(item:getParent():isContainer() and item:getParent():addItem(item:getId(), potMath)) then
+							player:addItem(item:getId(), potMath, true)
+						end
+					end
+					item:transform(targetId.transform, itemCount)
+					charges = charges - itemCount
+					target:transform(target:getId(), charges)
+					player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format('Remaining %s charges.', charges))
+
+					if charges == 0 then
+						target:remove()
 					end
 				end
-				item:transform(targetId.transform, itemCount)
-				charges = charges - itemCount
-				target:transform(target:getId(), charges)
-				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format('Remaining %s charges.', charges))
-
-				if charges == 0 then
-					target:remove()
-				end
- 			end
- 		end
+			end
+		end
+		return true
 	end
-	return true
-end
 end
 
 flasks:id(7634, 7635, 7636)
