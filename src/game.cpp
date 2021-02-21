@@ -3371,8 +3371,12 @@ void Game::playerWrapableItem(uint32_t playerId, const Position& pos, uint8_t st
 		return;
 	}
 
-	House* house = map.houses.getHouseByPlayer(player);
-	if (!house) {
+	std::set<House*> houses = map.houses.getHousesByPlayer(player);
+
+	HouseTile* playerCurTile = (HouseTile*)player->getTile();
+	House* curHouse = playerCurTile->getHouse();
+
+	if (!houses.size()) {
 		player->sendCancelMessage("You don't own a house, you need own a house to use this.");
 		return;
 	}
@@ -3384,14 +3388,14 @@ void Game::playerWrapableItem(uint32_t playerId, const Position& pos, uint8_t st
 
 	Item* item = thing->getItem();
 	Tile* tile = map.getTile(item->getPosition());
-	HouseTile* houseTile = dynamic_cast<HouseTile*>(tile);
-	if (!tile->hasFlag(TILESTATE_PROTECTIONZONE) || !houseTile) {
+	if (!tile->hasFlag(TILESTATE_PROTECTIONZONE) || !curHouse) {
 		player->sendCancelMessage("You may construct this only inside a house.");
 		return;
 	}
-	if (houseTile->getHouse() != house) {
-		player->sendCancelMessage("Only owners can wrap/unwrap inside a house.");
-			return;
+
+	if (curHouse && houses.find(curHouse) == houses.end()) {
+		player->sendCancelMessage("Only the owners and sub-owners of this house can use this.");
+		return;
 	}
 
 	if (!item || item->getClientID() != spriteId || item->hasAttribute(ITEM_ATTRIBUTE_UNIQUEID) || (!item->isWrapable() && item->getID() != 26054)) {

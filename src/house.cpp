@@ -667,14 +667,17 @@ House* Houses::getHouseByPlayerId(uint32_t playerId)
 	return nullptr;
 }
 
-House* Houses::getHouseByPlayer(Player* player)
+std::set<House*> Houses::getHousesByPlayer(Player* player)
 {
+	std::set<House*> houses;
+
 	for (const auto& it : houseMap) {
-		if (it.second->getOwner() == player->getGUID() || it.second->getHouseAccessLevel(player) == HOUSE_SUBOWNER) {
-			return it.second;
+		AccessHouseLevel_t accessLevel = it.second->getHouseAccessLevel(player);
+		if (accessLevel == HOUSE_OWNER || accessLevel == HOUSE_SUBOWNER) {
+			houses.insert(it.second);
 		}
 	}
-	return nullptr;
+	return houses;
 }
 
 bool Houses::loadHousesXML(const std::string& filename)

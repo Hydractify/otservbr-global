@@ -299,7 +299,7 @@ class Houses
 		}
 
 		House* getHouseByPlayerId(uint32_t playerId);
-		House* getHouseByPlayer(Player* player);
+		std::set<House*> getHousesByPlayer(Player* player);
 
 		bool loadHousesXML(const std::string& filename);
 
