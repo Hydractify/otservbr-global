@@ -3371,7 +3371,7 @@ void Game::playerWrapableItem(uint32_t playerId, const Position& pos, uint8_t st
 		return;
 	}
 
-	House* house = map.houses.getHouseByPlayerId(player->getGUID());
+	House* house = map.houses.getHouseByPlayer(player);
 	if (!house) {
 		player->sendCancelMessage("You don't own a house, you need own a house to use this.");
 		return;

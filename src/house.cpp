@@ -115,7 +115,7 @@ void House::setOwner(uint32_t guid, bool updateDatabase/* = true*/, Player* play
 		if (!result) {
 			return;
 		}
-		
+
 		std::string name = result->getString("name");
 		if (!name.empty()) {
 			owner = guid;
@@ -157,7 +157,7 @@ AccessHouseLevel_t House::getHouseAccessLevel(const Player* player)
 			return HOUSE_OWNER;
 		}
 	}
-	
+
 	if (player->hasFlag(PlayerFlag_CanEditHouses)) {
 		return HOUSE_OWNER;
 	}
@@ -661,6 +661,16 @@ House* Houses::getHouseByPlayerId(uint32_t playerId)
 {
 	for (const auto& it : houseMap) {
 		if (it.second->getOwner() == playerId) {
+			return it.second;
+		}
+	}
+	return nullptr;
+}
+
+House* Houses::getHouseByPlayer(Player* player)
+{
+	for (const auto& it : houseMap) {
+		if (it.second->getOwner() == player->getGUID() || it.second->getHouseAccessLevel(player) == HOUSE_SUBOWNER) {
 			return it.second;
 		}
 	}
