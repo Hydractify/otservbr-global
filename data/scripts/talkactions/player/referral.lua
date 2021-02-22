@@ -53,7 +53,7 @@ function refer.onSay(player, words, param)
 	if not referrals then
 		rewards[1](referringPlayer)
 	else
-		if #rewards < #referrals then
+		if #rewards > #referrals then
 			rewards[#referrals](referringPlayer)
 		end
 	end
