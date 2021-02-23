@@ -4,6 +4,15 @@
 	<look type="69"/>
 	<parameters>
 		<parameter key="message_greet" value="Just great, another disturbance. Just what I need. "/>
+
+		<parameter key="module_shop" value="1"/>
+		<parameter key="shop_buyable" value="flask with beaver bait, 11100, 100;"/>
+		<parameter key="shop_sellable" value="
+			broken crossbow, 12407, 30;
+			minotaur horn, 12428, 75;
+			piece of archer armor, 12439, 20;
+			piece of warrior armor, 12438, 50;
+			purple robe, 12429, 110;" />
 	</parameters>
 </npc>
 
