@@ -1296,7 +1296,7 @@ Storage = {
 			LastMissionState = 51529
 		},
 	TheCursedCrystal = {
-		Oneeyedjoe = 51530, 
+		Oneeyedjoe = 51530,
 		MedusaOil = 51531,
 		Questline = 51532
 		}

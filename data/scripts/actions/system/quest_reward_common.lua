@@ -65,23 +65,23 @@ end
 
 local function playerAddContainerItem(params, item)
 	local player = params.player
-
 	local reward = params.containerReward
-	if params.action then
-		local itemType = ItemType(params.itemid)
-		if itemType:isKey() then
-			-- If is key inside container, uses the "keyAction" variable
-			keyItem = reward:addItem(params.itemid, params.count)
-			keyItem:setActionId(params.action)
-		end
-	end
 
 	local achievement = achievementTable[item.uid]
 	if achievement then
 		player:addAchievement(achievement)
 	end
 
-	reward:addItem(params.itemid, params.count)
+	local itemType = ItemType(params.itemid)
+
+	if params.action and itemType:isKey() then
+		-- If is key inside container, uses the "keyAction" variable
+		keyItem = reward:addItem(params.itemid, params.count)
+		keyItem:setActionId(params.action)
+	else
+		reward:addItem(params.itemid, params.count)
+	end
+
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You have found a " .. getItemName(params.itemBagName) .. ".")
 	player:setStorageValue(params.storage, 1)
 	return true
