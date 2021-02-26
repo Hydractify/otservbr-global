@@ -332,6 +332,8 @@ local function creatureSayCallback(cid, type, msg)
 						-- Change to new vocation, convert magic level and skills and set proper stats
 						player:changeVocation(value)
 						player:setStorageValue(Storage.Dawnport.DoorVocation, value)
+
+						player:addPremiumDays(14) -- Add a testing period of 14 days of premium.
 					else
 						npcHandler.topic[cid] = 0
 						return true
