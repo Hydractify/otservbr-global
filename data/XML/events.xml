@@ -18,4 +18,10 @@
 		<colors colordark="#c88ffb" colorlight="#127db2" />
 		<details displaypriority="2" isseasonal="0" specialevent="0" />
 	</event>
+	<event name="Orc fortress raid" startdate="02/26/2021" enddate="02/28/2021">
+		<ingame exprate="500" lootrate="500" spawnrate="500" skillrate="500" creatureboost="Orc Warlord" />
+		<description description="The day where the whole server raids an orc fortress!" />
+		<colors colordark="#a7c3a0" colorlight="#475d46" />
+		<details displaypriority="2" isseasonal="0" specialevent="0" />
+	</event>
 </events>
