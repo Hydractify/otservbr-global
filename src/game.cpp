@@ -101,42 +101,52 @@ void Game::loadBoostedCreature()
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
 	uint8_t today = ltm->tm_mday;
-	if (date == today) {
-		name = result->getString("boostname");
-	} else {
-		uint16_t oldrace = result->getNumber<uint16_t>("raceid");
-		std::map<uint16_t, std::string> monsterlist = getBestiaryList();
-		uint16_t newrace = 0;
-		uint8_t k = 1;
-		while (newrace == 0 || newrace == oldrace) {
-			uint16_t random = normal_random(0, monsterlist.size());
-			for (auto it : monsterlist) {
-				if (k == random) {
-					newrace = it.first;
-					name = it.second;
+	name = result->getString("boostname");
+
+	if (getCreatureSchedule().empty() && name != getCreatureSchedule() || date != today ) {
+		MonsterType* monsterType;
+
+		if (getCreatureSchedule().empty()) {
+			uint16_t oldrace = result->getNumber<uint16_t>("raceid");
+			uint16_t newrace = 0;
+			std::map<uint16_t, std::string> monsterlist = getBestiaryList();
+			uint8_t k = 1;
+
+			while (newrace == 0 || newrace == oldrace) {
+				uint16_t random = normal_random(0, monsterlist.size());
+				for (auto it : monsterlist) {
+					if (k == random) {
+						newrace = it.first;
+					}
+					k++;
 				}
-				k++;
 			}
+
+			monsterType = g_monsters.getMonsterTypeByRaceId(newrace);
+		} else {
+			monsterType = g_monsters.getMonsterType(getCreatureSchedule());
 		}
 
-		MonsterType* monsterType = g_monsters.getMonsterTypeByRaceId(newrace);
+		if (!monsterType) {
+			std::cout << "[Warning - Boosted creature] Creature could not be loaded." << std::endl;
+			return;
+		}
+
+		// Set here to be used outside of the if nest
+		name = monsterType->name;
 
 		query.str(std::string());
 		query << "UPDATE `boosted_creature` SET ";
 		query << "`date` = '" << ltm->tm_mday << "',";
 		query << "`boostname` = " << db.escapeString(name) << ",";
-
-		if (monsterType) {
-			query << "`looktype` = " << static_cast<int>(monsterType->info.outfit.lookType) << ",";
-			query << "`lookfeet` = " << static_cast<int>(monsterType->info.outfit.lookFeet) << ",";
-			query << "`looklegs` = " << static_cast<int>(monsterType->info.outfit.lookLegs) << ",";
-			query << "`lookhead` = " << static_cast<int>(monsterType->info.outfit.lookHead) << ",";
-			query << "`lookbody` = " << static_cast<int>(monsterType->info.outfit.lookBody) << ",";
-			query << "`lookaddons` = " << static_cast<int>(monsterType->info.outfit.lookAddons) << ",";
-			query << "`lookmount` = " << static_cast<int>(monsterType->info.outfit.lookMount) << ",";
-		}
-
-		query << "`raceid` = '" << newrace << "'";
+		query << "`looktype` = " << static_cast<int>(monsterType->info.outfit.lookType) << ",";
+		query << "`lookfeet` = " << static_cast<int>(monsterType->info.outfit.lookFeet) << ",";
+		query << "`looklegs` = " << static_cast<int>(monsterType->info.outfit.lookLegs) << ",";
+		query << "`lookhead` = " << static_cast<int>(monsterType->info.outfit.lookHead) << ",";
+		query << "`lookbody` = " << static_cast<int>(monsterType->info.outfit.lookBody) << ",";
+		query << "`lookaddons` = " << static_cast<int>(monsterType->info.outfit.lookAddons) << ",";
+		query << "`lookmount` = " << static_cast<int>(monsterType->info.outfit.lookMount) << ",";
+		query << "`raceid` = '" << static_cast<int>(monsterType->info.raceid) << "'";
 
 		if (!db.executeQuery(query.str())) {
 			std::cout << "[Warning - Boosted creature] Failed to detect boosted creature database. (CODE 02)" << std::endl;
@@ -252,6 +262,12 @@ bool Game::loadScheduleEventFromXml()
 				uint16_t skillrate = pugi::cast<uint16_t>(schedENode.attribute("skillrate").value());
 				g_game.setSkillSchedule(skillrate);
 				ss << ", skill: " << (skillrate - 100) << "%";
+			}
+
+			if ((schedENode.attribute("creatureboost"))) {
+				std::string creatureboost = pugi::cast<std::string>(schedENode.attribute("creatureboost").value());
+				g_game.setCreatureSchedule(creatureboost);
+				ss << ", creature boosted: " << creatureboost;
 			}
 		}
 		std::cout << ss.str() << "." << std::endl;

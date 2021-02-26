@@ -644,6 +644,13 @@ class Game
 			skillSchedule = (skillSchedule * skillrate)/100;
 		}
 
+		std::string getCreatureSchedule() const {
+			return creatureSchedule;
+		}
+		void setCreatureSchedule(std::string creature) {
+			creatureSchedule = creature;
+		}
+
 		void playerInspectItem(Player* player, const Position& pos);
 		void playerInspectItem(Player* player, uint16_t itemId, uint8_t itemCount, bool cyclopedia);
 
@@ -722,6 +729,7 @@ class Game
 		uint16_t lootSchedule = 100;
 		uint16_t skillSchedule = 100;
 		uint32_t spawnSchedule = 100;
+		std::string creatureSchedule = "";
 
 		LightState_t lightState = LIGHT_STATE_DAY;
 		LightState_t currentLightState = lightState;
