@@ -101,6 +101,24 @@ void IOLoginData::setAccountType(uint32_t accountId, account::AccountType accoun
   Database::getInstance().executeQuery(query.str());
 }
 
+uint16_t IOLoginData::getAccountPremiumTrial(uint32_t accountId)
+{
+  std::ostringstream query;
+  query << "SELECT `premium_trial` FROM `accounts` WHERE id = " << accountId;
+  DBResult_ptr result = Database::getInstance().storeQuery(query.str());
+  if (!result) {
+    return 0;
+  }
+  return result->getNumber<uint16_t>("premium_trial");
+}
+
+void IOLoginData::setAccountPremiumTrial(uint32_t accountId)
+{
+  std::ostringstream query;
+  query << "UPDATE `accounts` SET `premium_trial` = 1 WHERE `id` = " << accountId;
+  Database::getInstance().executeQuery(query.str());
+}
+
 void IOLoginData::updateOnlineStatus(uint32_t guid, bool login)
 {
   if (g_config.getBoolean(ConfigManager::ALLOW_CLONES)) {

@@ -333,7 +333,10 @@ local function creatureSayCallback(cid, type, msg)
 						player:changeVocation(value)
 						player:setStorageValue(Storage.Dawnport.DoorVocation, value)
 
-						player:addPremiumDays(14) -- Add a testing period of 14 days of premium.
+						if player:getPremiumTrial() == 0 then
+							player:addPremiumDays(14) -- Add a testing period of 14 days of premium.
+							player:setPremiumTrial(1)
+						end
 					else
 						npcHandler.topic[cid] = 0
 						return true

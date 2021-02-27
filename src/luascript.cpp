@@ -2732,6 +2732,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getPremiumDays", LuaScriptInterface::luaPlayerGetPremiumDays);
 	registerMethod("Player", "addPremiumDays", LuaScriptInterface::luaPlayerAddPremiumDays);
 	registerMethod("Player", "removePremiumDays", LuaScriptInterface::luaPlayerRemovePremiumDays);
+	registerMethod("Player", "getPremiumTrial", LuaScriptInterface::luaPlayerGetPremiumTrial);
+	registerMethod("Player", "setPremiumTrial", LuaScriptInterface::luaPlayerSetPremiumTrial);
 
 	registerMethod("Player", "getTibiaCoins", LuaScriptInterface::luaPlayerGetTibiaCoins);
 	registerMethod("Player", "addTibiaCoins", LuaScriptInterface::luaPlayerAddTibiaCoins);
@@ -11197,6 +11199,31 @@ int LuaScriptInterface::luaPlayerGetPremiumDays(lua_State* L)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
 		lua_pushnumber(L, player->premiumDays);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetPremiumTrial(lua_State* L)
+{
+	// player:getPremiumTrial()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		lua_pushnumber(L, IOLoginData::getAccountPremiumTrial(player->getAccount()));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerSetPremiumTrial(lua_State* L)
+{
+	// player:setPremiumTrial()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		IOLoginData::setAccountPremiumTrial(player->getAccount());
+		lua_pushboolean(L, true);
 	} else {
 		lua_pushnil(L);
 	}

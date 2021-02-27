@@ -35,6 +35,8 @@ class IOLoginData
 		static uint32_t gameworldAuthentication(const std::string& accountName, const std::string& password, std::string& characterName);
 		static account::AccountType getAccountType(uint32_t accountId);
 		static void setAccountType(uint32_t accountId, account::AccountType accountType);
+		static uint16_t getAccountPremiumTrial(uint32_t accountId);
+		static void setAccountPremiumTrial(uint32_t accountId);
 		static void updateOnlineStatus(uint32_t guid, bool login);
 		static bool preloadPlayer(Player* player, const std::string& name);
 

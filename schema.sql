@@ -23,19 +23,20 @@ INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '16'), ('m
 --
 
 CREATE TABLE IF NOT EXISTS `accounts` (
-  `id`           int(11)       UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name`         varchar(32)   NOT NULL,
-  `password`     char(40)      NOT NULL,
-  `email`        varchar(255)  NOT NULL DEFAULT '',
-  `premdays`     int(11)       NOT NULL DEFAULT '0',
-  `lastday`      int(10)       UNSIGNED NOT NULL DEFAULT '0',
-  `type`         tinyint(1)    UNSIGNED NOT NULL DEFAULT '1',
-  `coins`        int(12)       UNSIGNED NOT NULL DEFAULT '0',
-  `creation`     int(11)       UNSIGNED NOT NULL DEFAULT '0',
-  `recruiter`    INT(6)        DEFAULT 0,
-  `discord_id`   bigint(18)    NULL,
-  `discord_tag`  varchar(255)  NULL,
-  `referring_id` int(11)       UNSIGNED NULL,
+  `id`            int(11)       UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name`          varchar(32)   NOT NULL,
+  `password`      char(40)      NOT NULL,
+  `email`         varchar(255)  NOT NULL DEFAULT '',
+  `premdays`      int(11)       NOT NULL DEFAULT '0',
+  `lastday`       int(10)       UNSIGNED NOT NULL DEFAULT '0',
+  `type`          tinyint(1)    UNSIGNED NOT NULL DEFAULT '1',
+  `coins`         int(12)       UNSIGNED NOT NULL DEFAULT '0',
+  `creation`      int(11)       UNSIGNED NOT NULL DEFAULT '0',
+  `recruiter`     INT(6)        DEFAULT 0,
+  `discord_id`    bigint(18)    NULL,
+  `discord_tag`   varchar(255)  NULL,
+  `referring_id`  int(11)       UNSIGNED NULL,
+  `premium_trial` tinyint(1)   NULL,
   CONSTRAINT `accounts_pk` PRIMARY KEY (`id`),
   CONSTRAINT `accounts_unique` UNIQUE (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
