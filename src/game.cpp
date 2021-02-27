@@ -103,7 +103,7 @@ void Game::loadBoostedCreature()
 	uint8_t today = ltm->tm_mday;
 	name = result->getString("boostname");
 
-	if (getCreatureSchedule().empty() && name != getCreatureSchedule() || date != today ) {
+	if (!getCreatureSchedule().empty() && name != getCreatureSchedule() || date != today ) {
 		MonsterType* monsterType;
 
 		if (getCreatureSchedule().empty()) {
