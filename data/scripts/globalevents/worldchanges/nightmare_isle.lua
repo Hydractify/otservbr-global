@@ -21,9 +21,10 @@ function NightmareIsle.onStartup(interval)
 	local select = config[math.random(#config)]
 	Game.loadMap('data/world/nightmareisle/' .. select.mapName .. '.otbm')
 	print('>> Nightmare Isle will be active '.. select.displayName ..' today')
-	
+	Webhook.send("World Change", "Nightmare Isle will be active " .. select.displayName .. " today", 0xB21E4B)
+
 	setGlobalStorageValue(GlobalStorage.NightmareIsle, 1)
-		
+
 	return true
 end
 NightmareIsle:register()

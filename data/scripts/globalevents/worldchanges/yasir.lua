@@ -11,6 +11,7 @@ local config = {
 		fromPosition = Position(33099, 32875, 7),
 		toPosition = Position(33106, 32893, 7),
 		mapName = 'ankrahmun',
+		displayName = 'Ankrahmun',
 		yasirPosition = Position(33102, 32884, 6)
 	},
 	-- Carlin
@@ -23,6 +24,7 @@ local config = {
 		fromPosition = Position(32397, 31806, 7),
 		toPosition = Position(32403, 31824, 7),
 		mapName = 'carlin',
+		displayName = 'Carlin',
 		yasirPosition = Position(32400, 31815, 6)
 	},
 	-- Liberty Bay
@@ -41,6 +43,7 @@ local config = {
 		fromPosition = Position(32311, 32884, 1),
 		toPosition = Position(32318, 32904, 7),
 		mapName = 'libertybay',
+		displayName = 'Liberty Bay',
 		yasirPosition = Position(32314, 32895, 6)
 	}
 }
@@ -60,7 +63,9 @@ function yasir.onStartup()
 	if yasirEnabled then
 		if math.random(100) <= yasirChance then
 			local randTown = config[math.random(#config)]
-			print('>> Yasir: '.. randTown.mapName ..'. ')
+			print('>> Yasir: '.. randTown.displayName ..'. ')
+			Webhook.send("World Change", "Yasir is docking in " .. randTown.displayName .. " today", 0xB21E4B)
+
 			iterateArea(
 			function(position)
 				local tile = Tile(position)
