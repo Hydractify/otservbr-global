@@ -80,6 +80,7 @@ int main(int argc, char* argv[]) {
 
 	ServiceManager serviceManager;
 
+	webhook_init();
 	g_dispatcher.start();
 	g_scheduler.start();
 
@@ -91,7 +92,10 @@ int main(int argc, char* argv[]) {
 	if (serviceManager.is_running()) {
 		std::cout << ">> " << g_config.getString(ConfigManager::SERVER_NAME)
 								<< " Server Online!" << std::endl << std::endl;
+		webhook_send_message("Server is now online", "Server has successfully started.", WEBHOOK_COLOR_ONLINE);
+
 		serviceManager.run();
+
 	} else {
 		std::cout << ">> No services running. The server is NOT online." << std::endl;
 		g_scheduler.shutdown();
@@ -349,9 +353,6 @@ void mainLoader(int, char*[], ServiceManager* services) {
 
 	g_game.start(services);
 	g_game.setGameState(GAME_STATE_NORMAL);
-
-	webhook_init();
-	webhook_send_message("Server is now online", "Server has successfully started.", WEBHOOK_COLOR_ONLINE);
 
 	g_loaderSignal.notify_all();
 }
