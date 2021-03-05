@@ -4,8 +4,6 @@
 	if you try to add a female outfit to a male character, it won’t work
 ]]
 
-local printConsole = true
-
 local addOutfit = TalkAction("/addoutfit")
 
 function addOutfit.onSay(player, words, param)
@@ -21,15 +19,30 @@ function addOutfit.onSay(player, words, param)
 	local split = param:split(",")
 	local name = split[1]
 	local lookType = tonumber(split[2])
+	local addons = tonumber(split[3])
+
+	if not lookType then
+		player:sendCancelMessage("'" .. lookType .. "' is not a valid lookType")
+		return true
+	end
+
+	if addons and addons > 3 then
+		player:sendCancelMessage("'" .. addons .. "' is not a valid addon")
+		return true
+	end
 
 	local target = Player(name)
 	if target then
 		target:addOutfit(lookType)
-		target:sendTextMessage(MESSAGE_ADMINISTRADOR, "".. player:getName() .." has been added a new outfit for you.")
-		player:sendTextMessage(MESSAGE_ADMINISTRADOR, "You have sucessfull added looktype ".. lookType .. " to the player ".. target:getName() ..".")
-		if printConsole then
-			print("[Info - TalkAction /addOutfit] Player: '".. player:getName() .."' has been added looktype: '".. lookType .. "' to the player: '".. target:getName() .."'")
+
+		if addons then
+			target:addOutfitAddon(lookType, addons)
 		end
+
+		target:sendTextMessage(MESSAGE_ADMINISTRADOR, player:getName() .. " has given you a new outfit.")
+		player:sendTextMessage(MESSAGE_ADMINISTRADOR, "You have sucessfully added the looktype " .. lookType .. " to the player ".. target:getName() .. ".")
+		print(addons)
+
 		return true
 	else
 		player:sendCancelMessage("Player not found.")
