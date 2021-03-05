@@ -17,7 +17,13 @@ local rewards = {
 		player:setBankBalance(player:getBankBalance() + 10000)
 
 		-- Revenant full outfit
-		player:addOutfitAddon(1323, 3)
+		if player:getSex() == 0 then -- Female
+			player:addOutfitAddon(1323)
+			player:addOutfitAddon(1323, 3)
+		else -- Male
+			player:addOutfitAddon(1322)
+			player:addOutfitAddon(1322, 3)
+		end
 	end,
 	[4] = function(player)
 		player:addTibiaCoins(1000)
@@ -55,6 +61,8 @@ function refer.onSay(player, words, param)
 	else
 		if #rewards > #referrals then
 			rewards[#referrals](referringPlayer)
+		else
+			rewards[#rewards](referringPlayer)
 		end
 	end
 
